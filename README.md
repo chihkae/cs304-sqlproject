@@ -6,8 +6,9 @@
 - Password: cs304
 
 ## Setup
-1. Add the mySQL connector library to your IDE build path
-2. Select the folder, right click and choose "Mark Directory as" -> "Source Root"
+1. Download JDBC connector: https://dev.mysql.com/downloads/connector/j/
+2. Add the mySQL connector library to your IDE build path
+3. Select the folder, right click and choose "Mark Directory as" -> "Source Root"
 
 ## TODOs
 
