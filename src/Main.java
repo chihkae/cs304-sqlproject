@@ -17,7 +17,7 @@ public class Main {
 
         try {
             conn = DriverManager
-                    .getConnection("jdbc:mysql://localhost:3306/test","root", "fatman123");
+                    .getConnection("jdbc:mysql://localhost:3306/airport","cs304", "cs304");
 
         } catch (SQLException ex) {
             System.out.println("Failed to connect to database");
