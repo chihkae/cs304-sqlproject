@@ -1,0 +1,13 @@
+21	1	Swarovski	Jewelry	1
+22	1 	Sunglass Express	Sunglasses	1
+23	1 	Rebel Popcorn	Candy,Kiosk	1
+24	1 	Phone Gear	Electronics	1
+25	1	The Body Shop	Personal Care	0
+26	1	Flight Stop	Apparel& Accessores,News,Books	1
+27	1	Bose	Electronics	1
+28	2 	MAC Cosmetic	Personal Care	1
+29	2 	Hudson Booksellers	Candy,Gifts & Books	0
+30	2	Victoria Secret	Apparel & Accessories	0
+31	2 	VIP Styling	Personal Care	1
+32	3 	SportsChek	Apparel,Fitness	0
+33	3	MEC	Apparel	0

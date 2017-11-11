@@ -1,0 +1,33 @@
+SHAN005	2017/11/08	Shanghai	16:45	1	15	China Airlines
+SHAN005	2017/11/09	Shanghai	16:45	1	15	China Airlines
+SHAN006	2017/11/10	Shanghai	16:45	1	7	Air Canada
+SHAN005	2017/11/11	Shanghai	16:45	1	15	China Airlines
+SHAN006	2017/11/12	Shanghai	16:45	1	7	Air Canada
+LIM006	2017/11/09	Lima	15:30	1	14	Taca
+LIM005	2017/11/10	Lima	15:30	1	14	United
+LIM007	2017/11/10	Lima	15:30	1	14	American Airlines
+HOU005 	2017/11/08	Huston	14:20	2	14	Delta
+HOU006 	2017/11/08	Huston	14:20	2	14	American Airlines
+HOU005 	2017/11/09	Huston	14:20	2	14	Delta
+HOU006 	2017/11/09	Huston	14:20	2	14	American Airlines
+CAN005	2017/11/08	Cancun	3:20	2	12	Air Canada
+CAN006	2017/11/08	Cancun	4:30	2	12	WestJet
+CAN006	2017/11/09	Cancun	9:30	2	12	WestJet
+CAN005	2017/11/09	Cancun	9:30	2	12	Air Canada
+CAN006	2017/11/10	Cancun	4:30	2	12	WestJet
+CAN005	2017/11/10	Cancun	6:30	2	12	Air Canada
+MLB005	2017/11/08	Melbourne	6:30	3	9	Air Canada
+MLB006	2017/11/08	Melbourne	11:30	3	10	Cathay Pacific
+MLB005	2017/11/09	Melbourne	9:30	3	9	Air Canada
+MLB006	2017/11/09	Melbourne	11:30	3	10	Cathay Pacific
+MLB005	2017/11/10	Melbourne	9:30	3	9	Air Canada
+MLB006	2017/11/10	Melbourne	11:30	3	10	Cathay Pacific
+LAX005	2017/11/09	Los Angeles	15:30	3	3	United
+LAX006	2017/11/09	Los Angeles	15:30	3	4	American Airlines
+LAX005	2017/11/10	Los Angeles	15:30	3	3	United 
+LAX005	2017/11/11	Los Angeles	15:30	3	3	United 
+LAX006	2017/11/11	Los Angeles	15:30	3	10	American Airlines
+LAX006	2017/11/10	Los Angeles	15:30	3	5	American Airlines
+
+
+

@@ -1,0 +1,22 @@
+
+
+1	1	8 oz. Burgers	Fast Food	4
+2	1	800 Degrees Pizza	Italian	4		
+3	1	Angel City Brewery	Alcohol & snacks	5
+4	1 	Barney's Beanery	Cafe	4		
+5	1	Border Grill	Grill	3
+6	1	BUILT	Fast Food	3
+7 	1 	California Pizza Kitchen	Italian	2
+8	1	Campanile	Mediterraean	5	 
+9	2 	Cantina Laredo	Mexican	3							
+10	2	Carl's Jr - Green Burrito	Mexican	1	
+11	2	Chaya Sushi	Japanese	5		
+12	2	Ciabatta Bar	Alcohol & snacks			5		
+13	2 	Coffee Corner	Cafe	4	
+14	2	Corona Bar	Bar	2 
+15	2	Dunkin Donuts	Snacks & Sweets	2		
+16	2	Earl of Sandwich	Snacks & Light meals	5		
+17	2 	Einstein Bros. Bagels	Bagels	4			
+18	2 	Farmers Market To Go	Vegetarian	4			
+19	3	III Forks Steakhouse	Steak	3				
+20	3	Kentucky Fried Chicken	Fast Food	5	

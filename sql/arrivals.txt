@@ -1,0 +1,28 @@
+MLB105	2017/11/08	Melborune	6:30	3	1	3	Air Canada
+MLB106	2017/11/08	Melbourne	11:30	3	1	3	Cathay Pacific
+MLB105	2017/11/09	Melbourne	9:30	3	1	3	Air Canada
+MLB106	2017/11/09	Melbourne	11:30	3	1	3	Cathay Pacific
+LIM105	2017/11/08	Lima	15:30	1	14	5	United
+LIM106	2017/11/08	Lima	15:30	1	13	6	Taca
+LIM105	2017/11/09	Lima	15:30	1	14	5	United
+LIM106	2017/11/09	Lima	15:30	1	13	6	Taca
+LIM105	2017/11/10	Lima	15:30	1	14	5	United
+LIM107	2017/11/10	Lima	15:30	1	13	6	American Airlines
+HOU105	2017/11/08	Huston	14:20	2	15	8	Delta
+HOU106	2017/11/08	Huston	14:20	2	17	3	American Airlines
+HOU105	2017/11/09	Huston	14:20	2	15	8	Delta
+HOU106	2017/11/09	Huston	14:20	2	17	3	American Airlines
+CAN105	2017/11/08	Cancun	3:20	2	15	8	Air Canada
+CAN106	2017/11/08	Cancun	4:30	2	22	11	WestJet
+CAN106	2017/11/09	Cancun	9:30	2	22	11	WestJet
+CAN105	2017/11/09	Cancun	9:30	2	15	8	Air Canada
+CAN106	2017/11/10	Cancun	4:30	2	22	11	WestJet
+CAN105	2017/11/10	Cancun	6:30	2	15	8	Air Canada
+SHAN105	2017/11/08	Shanghai	16:45	1	4	1	China Airlines
+SHAN105	2017/11/09	Shanghai	16:45	1	4	1	China Airlines
+SHAN106	2017/11/10	Shanghai	16:45	1	4	1	Air Canada
+SHAN105	2017-11-11	Shanghai	16:45	1	4	1	China Airlines
+SHAN106	2017-11-12	Shanghai	16:45	1	4	1	Air Canada
+
+
+
