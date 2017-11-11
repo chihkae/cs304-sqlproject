@@ -10,9 +10,9 @@
 2. Create a DB called ```airport``` and load all the data into it.
 3. Download JDBC connector: https://dev.mysql.com/downloads/connector/j/
 2. Add the mySQL connector library to your IDE build path
-3. Select the folder, right click and choose "Mark Directory as" -> "Source Root"
+3. Select the folder, right click and choose ```Mark Directory as``` -> ```Source Root```
 4. If you haven't already, create a directory inside the repo called ```out```
-5. Go to ```File``` > ````Project Structure``` > ```Project Compiler Output```.
+5. Go to ```File``` -> ````Project Structure``` -> ```Project Compiler Output```.
 Inside that, enter something like ```C:<some-path>\cs304-project\out```
 6. Then go to the ```Modules``` > ```Paths``` and make sure you are inheriting the project compile path
 
