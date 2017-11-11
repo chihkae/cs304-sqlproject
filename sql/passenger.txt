@@ -4,7 +4,7 @@
 4	LIM005	2017/11/10	Alex Straton	343-343-3433	291 Creek Rd. Powhatan, VA 23139
 5	CAN005	2017/11/08	Juan Carlos	343-343-3433	63 George Drive Elkhart, IN 46514
 6	MLB005	2017/11/08	Billy Barnes	232-342-6566	448 S. County Drive Quincy, MA 02169
-7	LAX006	2017/11/10	George Berg	343-343-2242    9705  Meadow Court Villa Park, IL 60181
+7	LAX006	2017/11/10	George Berg	343-343-2242    9705 Meadow Court Villa Park, IL 60181
 8	LAX005	2017/11/09	Lucas Li 	765-657-2353	83 Harvard Street Dracut, MA 01826
 9 	LIM007 	2017/11/10	Nick Garios	343-535-3343	9125 SW. Rockaway Lane Mableton, GA 30126
 10	CAN006	2017/11/08	Mark Texeria	903-342-2423	7225 Liberty Lane Bolingbrook, IL 60440
