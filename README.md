@@ -1,9 +1,9 @@
 # CS 304 Project
 
 ## MySQL Authentication
-DB name: airport
-User: cs304
-Password: cs304
+- DB name: airport
+- User: cs304
+- Password: cs304
 
 ## Setup
 1. Add the mySQL connector library to your IDE build path
