@@ -1,4 +1,4 @@
-package src.database;
+package database;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
