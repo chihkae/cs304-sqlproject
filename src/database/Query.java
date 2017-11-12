@@ -70,14 +70,22 @@ public class Query {
         return updateStatement.executeUpdate();
     }
 
-    public static ResultSet updateArrivalFlight(String flightNumber, Date arrivalDate,
-                                                Date newArrivalDate) throws SQLException {
-        // TODO
-        // TODO
-        // TODO
-        // TODO
-        return null;
+    public static int updateArrivalFlightTime(String flightNumber, Date arrivalDate,
+                                                Time newArrivalTime) throws SQLException {
+        String updateString =
+                "update arrival_flight " +
+                        "set arrival_time = ? " +
+                        "where arrival_flight.flight_number = ? " +
+                        "and arrival_flight.arrival_time = ?";
+
+        PreparedStatement updateStatement = getPreparedStatement(updateString);
+        updateStatement.setTime(1, newArrivalTime);
+        updateStatement.setString(2, flightNumber);
+        updateStatement.setDate(3, arrivalDate);
+
+        return updateStatement.executeUpdate();
     }
+
 
     public static int removePassenger(int passengerID) throws SQLException {
         String deleteString =
