@@ -7,7 +7,7 @@ import java.awt.event.ActionEvent;
 import java.io.BufferedReader;
 import java.io.FileReader;
 
-public class EmployeeViewer extends SubViewer{
+public class EmployeeViewer extends SubViewer {
     private JPanel employeePanel;
     private JPanel buttonPanel;
     private String test;
