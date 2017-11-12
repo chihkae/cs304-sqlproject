@@ -10,10 +10,7 @@ import java.io.FileReader;
 public class EmployeeViewer extends SubViewer {
     private JPanel employeePanel;
     private JPanel buttonPanel;
-    private JPanel oldPanel = null;
-    private JPanel displayPanel;
     private String test;
-    private JScrollPane scrollPane;
 
     private static EmployeeViewer instance;
 
@@ -47,12 +44,12 @@ public class EmployeeViewer extends SubViewer {
     }
 
     private void createPanel(){
-        scrollPane = new JScrollPane();
         employeePanel = new JPanel();
         employeePanel.setLayout(new BorderLayout());
-        displayPanel = new JPanel();
-        displayPanel.setLayout(new BorderLayout());
-        displayPanel.setPreferredSize(new Dimension(900, MainPageViewer.HEIGHT));
+//        scrollPane = new JScrollPane();
+//        displayPanel = new JPanel();
+//        displayPanel.setLayout(new BorderLayout());
+//        displayPanel.setPreferredSize(new Dimension(900, MainPageViewer.HEIGHT));
         buttonPanel = new JPanel();
         buttonPanel.setPreferredSize(new Dimension(100, MainPageViewer.HEIGHT));
         buttonPanel.setLayout(new GridLayout(7, 1));
@@ -329,14 +326,14 @@ public class EmployeeViewer extends SubViewer {
         }
     }
 
-    private void removePanels() {
-        if(oldPanel != null){
-            displayPanel.remove(oldPanel);
-        }
-        if(scrollPane != null){
-            displayPanel.remove(scrollPane);
-        }
-    }
+//    private void removePanels() {
+//        if(oldPanel != null){
+//            displayPanel.remove(oldPanel);
+//        }
+//        if(scrollPane != null){
+//            displayPanel.remove(scrollPane);
+//        }
+//    }
 
     class AddPassengerListener implements ActionListener{
         @Override

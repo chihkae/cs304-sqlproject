@@ -4,6 +4,7 @@ import javax.swing.*;
 public class MainPageViewer {
     public static final int WIDTH = 1000;
     public static final int HEIGHT = 800;
+
     public static void main(String[] args)
     {
         JFrame frame = new JFrame("Main Page");
