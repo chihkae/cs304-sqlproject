@@ -14,17 +14,6 @@ public class Query {
      * Employees
      */
 
-    public static ResultSet findLostBaggage(int baggageId) throws SQLException {
-        String selectString =
-                "select * from baggage b, passenger p " +
-                "where b.passenger_id = p.id " +
-                "and b.baggage_number = ?";
-        PreparedStatement selectStatement = getPreparedStatement(selectString);
-
-        selectStatement.setInt(1, baggageId);
-        return selectStatement.executeQuery();
-    }
-
     public static boolean addNewPassenger(String flightNumber, Date flightDate, String passengerName,
                                             int phoneNumber, String address) throws SQLException {
         String insertString =
@@ -70,22 +59,16 @@ public class Query {
         return updateStatement.executeUpdate();
     }
 
-    public static int updateArrivalFlightTime(String flightNumber, Date arrivalDate,
-                                                Time newArrivalTime) throws SQLException {
-        String updateString =
-                "update arrival_flight " +
-                        "set arrival_time = ? " +
-                        "where arrival_flight.flight_number = ? " +
-                        "and arrival_flight.arrival_time = ?";
+    public static ResultSet findLostBaggage(int baggageId) throws SQLException {
+        String selectString =
+                "select * from baggage b, passenger p " +
+                        "where b.passenger_id = p.id " +
+                        "and b.baggage_number = ?";
+        PreparedStatement selectStatement = getPreparedStatement(selectString);
 
-        PreparedStatement updateStatement = getPreparedStatement(updateString);
-        updateStatement.setTime(1, newArrivalTime);
-        updateStatement.setString(2, flightNumber);
-        updateStatement.setDate(3, arrivalDate);
-
-        return updateStatement.executeUpdate();
+        selectStatement.setInt(1, baggageId);
+        return selectStatement.executeQuery();
     }
-
 
     public static int removePassenger(int passengerID) throws SQLException {
         String deleteString =
@@ -95,6 +78,13 @@ public class Query {
         PreparedStatement deleteStatement = getPreparedStatement(deleteString);
         deleteStatement.setInt(1, passengerID);
         return deleteStatement.executeUpdate();
+    }
+
+    public static ResultSet showAllPassengers() throws SQLException {
+        String selectString = "select * from passenger";
+
+        PreparedStatement selectStatement = getPreparedStatement(selectString);
+        return selectStatement.executeQuery();
     }
 
     public static ResultSet showPassengersOnEachFlight() throws SQLException {
@@ -108,6 +98,22 @@ public class Query {
 
         PreparedStatement selectStatement = getPreparedStatement(selectString);
         return selectStatement.executeQuery();
+    }
+
+    public static int updateArrivalFlightTime(String flightNumber, Date arrivalDate,
+                                              Time newArrivalTime) throws SQLException {
+        String updateString =
+                "update arrival_flight " +
+                        "set arrival_time = ? " +
+                        "where arrival_flight.flight_number = ? " +
+                        "and arrival_flight.arrival_time = ?";
+
+        PreparedStatement updateStatement = getPreparedStatement(updateString);
+        updateStatement.setTime(1, newArrivalTime);
+        updateStatement.setString(2, flightNumber);
+        updateStatement.setDate(3, arrivalDate);
+
+        return updateStatement.executeUpdate();
     }
 
     public static int updateDepartureFlightTime(String flightNumber, Date departureDate,
@@ -125,6 +131,8 @@ public class Query {
 
         return updateStatement.executeUpdate();
     }
+
+
 
     /*
      * Passengers

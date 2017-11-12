@@ -7,7 +7,9 @@
 
 ## Setup
 1. Download MySQL. Set up a user called ```cs304``` with password ```cs304```.
-2. Create a DB called ```airport``` and load all the data into it.
+2. Setup the airport database.
+- Inside the airport.sql, replace the path to the airport.sql to your own path
+- mysql -u cs304 -p < airport.sql
 3. Download JDBC connector: https://dev.mysql.com/downloads/connector/j/
 2. Add the mySQL connector library to your IDE build path
 3. ```File``` -> ```Project Structure```. Mark every **top level** directory as ```sources``` except the out directory.
