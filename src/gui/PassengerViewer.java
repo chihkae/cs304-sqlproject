@@ -8,22 +8,24 @@ import java.awt.event.ActionListener;
 public class PassengerViewer extends SubViewer{
     private JPanel passengerPanel;
     private JPanel buttonPanel;
+    private int id;
     //private String test;
 
     private static PassengerViewer instance;
 
-    public PassengerViewer()
+    public PassengerViewer(int id)
     {
         super();
 
+        this.id = id;
         setFrameTitle("Passenger Page");
         createPanel();
         frame.add(passengerPanel);
     }
 
-    public static PassengerViewer getInstance() {
+    public static PassengerViewer getInstance(int id) {
         if(instance == null)
-            instance = new PassengerViewer();
+            instance = new PassengerViewer(id);
         return instance;
     }
 

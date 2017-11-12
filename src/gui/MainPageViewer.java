@@ -15,9 +15,9 @@ public class MainPageViewer {
         panel.setFrame(frame);
 
         //Display the window.
-        //frame.setSize(WIDTH, HEIGHT);
+        frame.setSize(300, 150);
         frame.add(panel.getPanel());
-        frame.pack();
+        //frame.pack();
         frame.setVisible(true);
     }
 }
