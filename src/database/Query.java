@@ -25,15 +25,15 @@ public class Query {
         return selectStatement.executeQuery();
     }
 
-    public static boolean addNewPassenger(String flightNumber, Date departureDate, String passengerName,
+    public static boolean addNewPassenger(String flightNumber, Date flightDate, String passengerName,
                                             int phoneNumber, String address) throws SQLException {
         String insertString =
-                "insert into passenger(flight_number, departure_date, name, phone_number, address) " +
+                "insert into passenger(flight_number, flight_date, name, phone_number, address) " +
                 "values(?, ?, ?, ?, ?)";
         PreparedStatement insertStatement = getPreparedStatement(insertString);
 
         insertStatement.setString(1, flightNumber);
-        insertStatement.setDate(2, departureDate);
+        insertStatement.setDate(2, flightDate);
         insertStatement.setString(3, passengerName);
         insertStatement.setInt(4, phoneNumber);
         insertStatement.setString(5, address);
@@ -60,7 +60,7 @@ public class Query {
                         "and df1.airline_name = ?" +
                 ") t " +
                 "where passenger.flight_number <> t.flight_number " +
-                "and passenger.departure_date = t.departure_date " +
+                "and passenger.flight_date = t.departure_date " +
                 "passenger.id = ?";
 
         PreparedStatement updateStatement = getPreparedStatement(updateString);
@@ -95,7 +95,7 @@ public class Query {
                 "select df.flight_number, df.arrival_date, COUNT(*) " +
                 "from passenger p, departure_flight df " +
                 "where p.flight_number = df.flight_number " +
-                "and p.departure_date = df.departure_date" +
+                "and p.flight_date = df.departure_date" +
                 "group by df.departure_flight";
 
         PreparedStatement selectStatement = getPreparedStatement(selectString);
