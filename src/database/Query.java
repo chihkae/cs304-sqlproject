@@ -102,17 +102,18 @@ public class Query {
         return selectStatement.executeQuery();
     }
 
-    public static int updateDepartureFlight(int flightNumber, Date departureDate,
-                                                  Time departureTime) throws SQLException {
+    public static int updateDepartureFlightTime(String flightNumber, Date departureDate,
+                                                  Time newDepartureTime) throws SQLException {
         String updateString =
                 "update departure_flight " +
-                "set departure_date = ?, departure_time = ? " +
-                "where departure_flight.flight_number = ?";
+                "set departure_time = ? " +
+                "where departure_flight.flight_number = ? " +
+                "and departure_flight.departure_time = ?";
 
         PreparedStatement updateStatement = getPreparedStatement(updateString);
-        updateStatement.setDate(1, departureDate);
-        updateStatement.setTime(2, departureTime);
-        updateStatement.setInt(3, flightNumber);
+        updateStatement.setTime(1, newDepartureTime);
+        updateStatement.setString(2, flightNumber);
+        updateStatement.setDate(3, departureDate);
 
         return updateStatement.executeUpdate();
     }
