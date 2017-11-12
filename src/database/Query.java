@@ -93,6 +93,13 @@ public class Query {
     }
 
     public static ResultSet showPassengersOnEachFlight() throws SQLException {
+        // only applies to departure flight
+        String selectString =
+                "select df.flight_number, df.arrival_date, COUNT(*) " +
+                "from passenger p, departure_flight df " +
+                "where p.flight_number = df.flight_number " +
+                "and p.departure_date = df.departure_date" +
+                "group by df.departure_flight";
         return null;
     }
 
