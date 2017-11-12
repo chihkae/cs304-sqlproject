@@ -116,6 +116,13 @@ public class Query {
         return updateStatement.executeUpdate();
     }
 
+    public static ResultSet showAllArrivalFlights() throws SQLException {
+        String selectString = "select * from arrival_flight";
+
+        PreparedStatement selectStatement = getPreparedStatement(selectString);
+        return selectStatement.executeQuery();
+    }
+
     public static int updateDepartureFlightTime(String flightNumber, Date departureDate,
                                                   Time newDepartureTime) throws SQLException {
         String updateString =
@@ -130,6 +137,13 @@ public class Query {
         updateStatement.setDate(3, departureDate);
 
         return updateStatement.executeUpdate();
+    }
+
+    public static ResultSet showAllDepartureFlights() throws SQLException {
+        String selectString = "select * from departure_flight";
+
+        PreparedStatement selectStatement = getPreparedStatement(selectString);
+        return selectStatement.executeQuery();
     }
 
 
