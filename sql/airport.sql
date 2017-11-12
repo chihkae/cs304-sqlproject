@@ -121,10 +121,10 @@ create table customer_service
 
 #grant select on customer_service to public;
 
-load data local infile '/Users/Stanley/Documents/CS304/cs304-project/sql/terminals.txt ') into table terminals
+load data local infile '/Users/Stanley/Documents/CS304/cs304-project/sql/terminals.txt ' into table terminals
 fields terminated by '\t';
 
-load data local infile '/Users/Stanley/Documents/CS304/cs304-project/sql/bagggeCarousels.txt ' into table baggage_carousel
+load data local infile '/Users/Stanley/Documents/CS304/cs304-project/sql/baggage_carousel.txt ' into table baggage_carousel
 fields terminated by '\t';
 
 load data local infile '/Users/Stanley/Documents/CS304/cs304-project/sql/General_Service.txt ' into table general_service
@@ -157,5 +157,5 @@ fields terminated by '\t';
 load data local infile '/Users/Stanley/Documents/CS304/cs304-project/sql/shops.txt ' into table shop
 fields terminated by '\t';
 
-load data local infile '/Users/Stanley/Documents/CS304/cs304-project/sql/CustomerService.txt ' into table customer_service
+load data local infile '/Users/Stanley/Documents/CS304/cs304-project/sql/customer_service.txt ' into table customer_service
 fields terminated by '\t';
