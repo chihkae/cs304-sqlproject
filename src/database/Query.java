@@ -25,14 +25,14 @@ public class Query {
         return selectStatement.executeQuery();
     }
 
-    public static boolean addNewPassenger(int flightNumber, Date departureDate, String passengerName,
+    public static boolean addNewPassenger(String flightNumber, Date departureDate, String passengerName,
                                             int phoneNumber, String address) throws SQLException {
         String insertString =
                 "insert into passenger(flight_number, departure_date, name, phone_number, address) " +
                 "values(?, ?, ?, ?, ?)";
         PreparedStatement insertStatement = getPreparedStatement(insertString);
 
-        insertStatement.setInt(1, flightNumber);
+        insertStatement.setString(1, flightNumber);
         insertStatement.setDate(2, departureDate);
         insertStatement.setString(3, passengerName);
         insertStatement.setInt(4, phoneNumber);
@@ -70,7 +70,7 @@ public class Query {
         return updateStatement.executeUpdate();
     }
 
-    public static ResultSet updateArrivalFlight(int flightNumber, Date arrivalDate,
+    public static ResultSet updateArrivalFlight(String flightNumber, Date arrivalDate,
                                                 Date newArrivalDate) throws SQLException {
         // TODO
         // TODO
@@ -102,7 +102,7 @@ public class Query {
         return selectStatement.executeQuery();
     }
 
-    public static int updateDepartureFlight(int flightNumber, Date departureDate,
+    public static int updateDepartureFlight(String flightNumber, Date departureDate,
                                                   Time departureTime) throws SQLException {
         String updateString =
                 "update departure_flight " +
@@ -112,7 +112,7 @@ public class Query {
         PreparedStatement updateStatement = getPreparedStatement(updateString);
         updateStatement.setDate(1, departureDate);
         updateStatement.setTime(2, departureTime);
-        updateStatement.setInt(3, flightNumber);
+        updateStatement.setString(3, flightNumber);
 
         return updateStatement.executeUpdate();
     }
