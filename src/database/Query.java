@@ -13,21 +13,13 @@ public class Query {
     /*
      * Employees
      */
-    public static ResultSet findLostBaggage(int baggageId) throws SQLException {
-        String selectString =
-                "select * from baggage b, passenger p " +
-                        "where b.passenger_id = p.id " +
-                        "and b.baggage_number = ?";
-        PreparedStatement selectStatement = getPreparedStatement(selectString);
-        selectStatement.setInt(1, baggageId);
-        return selectStatement.executeQuery();
-    }
 
     public static boolean addNewPassenger(String flightNumber, Date flightDate, String passengerName,
                                             int phoneNumber, String address) throws SQLException {
         String insertString =
                 "insert into passenger(flight_number, flight_date, name, phone_number, address) " +
                 "values(?, ?, ?, ?, ?)";
+
         PreparedStatement insertStatement = getPreparedStatement(insertString);
 
         insertStatement.setString(1, flightNumber);
@@ -49,8 +41,8 @@ public class Query {
 
         String updateString =
                 "update passenger " +
-                "set flight_number = t.flight_number " +
-                "from (" +
+                        "set flight_number = t.flight_number " +
+                        "from (" +
                         "select *" +
                         "from departure_flight df1, departure_flight df2" +
                         "where df1.flight_number <> df2.flight_number and df1.departure_date = df2.departure_date " +
@@ -68,31 +60,32 @@ public class Query {
         return updateStatement.executeUpdate();
     }
 
-    public static int updateArrivalFlightTime(String flightNumber, Date arrivalDate,
-                                                Time newArrivalTime) throws SQLException {
-        String updateString =
-                "update arrival_flight " +
-                        "set arrival_time = ? " +
-                        "where arrival_flight.flight_number = ? " +
-                        "and arrival_flight.arrival_time = ?";
+    public static ResultSet findLostBaggage(int baggageId) throws SQLException {
+        String selectString =
+                "select * from baggage b, passenger p " +
+                        "where b.passenger_id = p.id " +
+                        "and b.baggage_number = ?";
+        PreparedStatement selectStatement = getPreparedStatement(selectString);
 
-        PreparedStatement updateStatement = getPreparedStatement(updateString);
-        updateStatement.setTime(1, newArrivalTime);
-        updateStatement.setString(2, flightNumber);
-        updateStatement.setDate(3, arrivalDate);
-
-        return updateStatement.executeUpdate();
+        selectStatement.setInt(1, baggageId);
+        return selectStatement.executeQuery();
     }
-
 
     public static int removePassenger(int passengerID) throws SQLException {
         String deleteString =
                 "delete from passenger " +
-                "where passenger.id = ?";
+                        "where passenger.id = ?";
 
         PreparedStatement deleteStatement = getPreparedStatement(deleteString);
         deleteStatement.setInt(1, passengerID);
         return deleteStatement.executeUpdate();
+    }
+
+    public static ResultSet showAllPassengers() throws SQLException {
+        String selectString = "select * from passenger";
+
+        PreparedStatement selectStatement = getPreparedStatement(selectString);
+        return selectStatement.executeQuery();
     }
 
     public static ResultSet showPassengersOnEachFlight() throws SQLException {
@@ -106,6 +99,22 @@ public class Query {
 
         PreparedStatement selectStatement = getPreparedStatement(selectString);
         return selectStatement.executeQuery();
+    }
+
+    public static int updateArrivalFlightTime(String flightNumber, Date arrivalDate,
+                                              Time newArrivalTime) throws SQLException {
+        String updateString =
+                "update arrival_flight " +
+                        "set arrival_time = ? " +
+                        "where arrival_flight.flight_number = ? " +
+                        "and arrival_flight.arrival_time = ?";
+
+        PreparedStatement updateStatement = getPreparedStatement(updateString);
+        updateStatement.setTime(1, newArrivalTime);
+        updateStatement.setString(2, flightNumber);
+        updateStatement.setDate(3, arrivalDate);
+
+        return updateStatement.executeUpdate();
     }
 
     public static int updateDepartureFlightTime(String flightNumber, Date departureDate,
@@ -127,4 +136,61 @@ public class Query {
     /*
      * Passengers
      */
+
+    public static ResultSet vipLoungAvailable(int p_id) throws SQLException {
+        String booleanString =
+                "Select vip_lounge" +
+                        "from terminals t, passengers p, departure_flight df, arrival_flght af" +
+                        "where p.id= ? ,p.flight_date=df.departure_date, p.flight_number= df.flight_number" +
+                        "p.flight_date=af.arrival_date, p.flight_number=af.flight_number" +
+                        "df.terminal_number= t.terminal_number, af.terminal_number=t.terminal_number";
+        PreparedStatement booleanStatement = getPreparedStatement(booleanString);
+        booleanStatement.setInt(1, p_id);
+        ResultSet rs = booleanStatement.executeQuery(booleanString);
+        return rs;
+    }
+
+    public static ResultSet nonEnglish_exch(int p_id) throws SQLException {
+        String booleanString =
+                "Select non_english_service" +
+                        "from passenger p, departure flight df, arrival_flight af, customer_service cs" +
+                        "where p.id= ?, p.flight_date=af.arrival_date, p.flight_date=df_arrival_date" +
+                        "p.flight_number= df.flight_number, p.flight_number= af.flight_number" +
+                        "af.terminal_number= cs.terminal_number, df.terminal_number=cs.terminal_number";
+        PreparedStatement booleanStatement = getPreparedStatement(booleanString);
+        booleanStatement.setInt(1, p_id);
+        ResultSet rs = booleanStatement.executeQuery(booleanString);
+        return rs;
+    }
+
+    public static ResultSet favoriteLocation(String restaurantName) throws SQLException {
+        String selectString =
+                "Select name, terminal_number" +
+                        "from restaurant r" +
+                        "where r.name= LIKE ?";
+        PreparedStatement selectStatement = getPreparedStatement(selectString);
+        selectStatement.setString(1, restaurantName);
+        ResultSet rs = selectStatement.executeQuery();
+        return rs;
+    }
+
+    public static ResultSet atehereStars(int p_id) throws SQLException {
+        String selectString =
+                "Select yelp_rating" +
+                        "from restaurant r, uses u," +
+                        "where u.id=?, u.general_service_id= r.id";
+        PreparedStatement selectStatement = getPreparedStatement(selectString);
+        selectStatement.setInt(1, p_id);
+        ResultSet rs = selectStatement.executeQuery();
+        return rs;
+    }
+
+    public static ResultSet showAllRestaurants() throws SQLException {
+        String selectString =
+                "Select *" +
+                        "from restaurant";
+        PreparedStatement selectStatement = getPreparedStatement(selectString);
+        ResultSet rs = selectStatement.executeQuery();
+        return rs;
+    }
 }
