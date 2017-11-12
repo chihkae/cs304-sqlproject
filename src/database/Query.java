@@ -14,19 +14,20 @@ public class Query {
      * Employees
      */
 
-    public static boolean addNewPassenger(String flightNumber, Date flightDate, String passengerName,
-                                            int phoneNumber, String address) throws SQLException {
+    public static boolean addNewPassenger(int passengerId, String flightNumber, Date flightDate,
+                                          String passengerName, int phoneNumber, String address)
+            throws SQLException {
         String insertString =
-                "insert into passenger(flight_number, flight_date, name, phone_number, address) " +
-                "values(?, ?, ?, ?, ?)";
+                "insert into passenger values(?, ?, ?, ?, ?, ?)";
 
         PreparedStatement insertStatement = getPreparedStatement(insertString);
 
-        insertStatement.setString(1, flightNumber);
-        insertStatement.setDate(2, flightDate);
-        insertStatement.setString(3, passengerName);
-        insertStatement.setInt(4, phoneNumber);
-        insertStatement.setString(5, address);
+        insertStatement.setInt(1, passengerId);
+        insertStatement.setString(2, flightNumber);
+        insertStatement.setDate(3, flightDate);
+        insertStatement.setString(4, passengerName);
+        insertStatement.setInt(5, phoneNumber);
+        insertStatement.setString(6, address);
 
         return insertStatement.execute();
 
