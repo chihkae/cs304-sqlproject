@@ -1,4 +1,4 @@
-package src.gui;
+package gui;
 
 import javax.swing.*;
 import java.awt.*;
@@ -7,7 +7,7 @@ import java.awt.event.ActionEvent;
 import java.io.BufferedReader;
 import java.io.FileReader;
 
-public class EmployeeViewer extends SubViewer{
+public class EmployeeViewer extends SubViewer {
     private JPanel employeePanel;
     private JPanel buttonPanel;
     private JPanel oldPanel = null;

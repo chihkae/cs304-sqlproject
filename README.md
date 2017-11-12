@@ -28,7 +28,7 @@ Alex, Stanley
 c) Code each set of queries and test them in mySQL
 Rachel, CK
 
-d) Code the frontend GUI using HTML, Bootstrap and Javascript to handle the SQL and format the input appropriately to send to the backend.
+d) Code the frontend gui using HTML, Bootstrap and Javascript to handle the SQL and format the input appropriately to send to the backend.
 Alex, CK
 
 e) Code the Java Backend and connect the program to mySQL. Take in the input from the frontend and embed the SQL input from the frontend. 

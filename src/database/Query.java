@@ -1,9 +1,6 @@
 package database;
 
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class Query {
     public static PreparedStatement getPreparedStatement(String sqlStatement) throws SQLException {
@@ -100,11 +97,24 @@ public class Query {
                 "where p.flight_number = df.flight_number " +
                 "and p.departure_date = df.departure_date" +
                 "group by df.departure_flight";
-        return null;
+
+        PreparedStatement selectStatement = getPreparedStatement(selectString);
+        return selectStatement.executeQuery();
     }
 
-    public static ResultSet updateDepartureFlight() throws SQLException {
-        return null;
+    public static int updateDepartureFlight(int flightNumber, Date departureDate,
+                                                  Time departureTime) throws SQLException {
+        String updateString =
+                "update departure_flight " +
+                "set departure_date = ?, departure_time = ? " +
+                "where departure_flight.flight_number = ?";
+
+        PreparedStatement updateStatement = getPreparedStatement(updateString);
+        updateStatement.setDate(1, departureDate);
+        updateStatement.setTime(2, departureTime);
+        updateStatement.setInt(3, flightNumber);
+
+        return updateStatement.executeUpdate();
     }
 
     /*
