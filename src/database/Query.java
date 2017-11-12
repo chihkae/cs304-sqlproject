@@ -13,14 +13,12 @@ public class Query {
     /*
      * Employees
      */
-
     public static ResultSet findLostBaggage(int baggageId) throws SQLException {
         String selectString =
                 "select * from baggage b, passenger p " +
-                "where b.passenger_id = p.id " +
-                "and b.baggage_number = ?";
+                        "where b.passenger_id = p.id " +
+                        "and b.baggage_number = ?";
         PreparedStatement selectStatement = getPreparedStatement(selectString);
-
         selectStatement.setInt(1, baggageId);
         return selectStatement.executeQuery();
     }
