@@ -1,3 +1,8 @@
+drop database airport;
+create database airport;
+use airport;
+
+
 create table terminals
 	(terminal_number int not null,
 	address varchar(80) null,
@@ -75,7 +80,7 @@ create table baggage
 	foreign key (passenger_id) references passenger(id) ON DELETE CASCADE,
 	foreign key (carousel_number, terminal_number) references baggage_carousel(carousel_number, terminal_number) ON DELETE CASCADE);
  
-grant select on baggage to public;
+#grant select on baggage to public;
 
 
 create table uses
@@ -113,6 +118,45 @@ create table customer_service
 	primary key (id),
 	foreign key (id) references general_service(id) ON DELETE CASCADE,
 	foreign key (terminal_number) references terminals(terminal_number) ON DELETE CASCADE);
- 
-grant select on customer_service to public;
 
+ 
+#grant select on customer_service to public;
+
+load data local infile '/Users/songyihang/Documents/Courses/CPSC304/cs304-project/sql/terminals.txt ' into table terminals
+fields terminated by '\t';
+
+load data local infile '/Users/songyihang/Documents/Courses/CPSC304/cs304-project/sql/bagggeCarousels.txt ' into table baggage_carousel
+fields terminated by '\t';
+
+load data local infile '/Users/songyihang/Documents/Courses/CPSC304/cs304-project/sql/General_Service.txt ' into table general_service
+fields terminated by '\t';
+
+load data local infile '/Users/songyihang/Documents/Courses/CPSC304/cs304-project/sql/gates.txt ' into table gates
+fields terminated by '\t';
+
+load data local infile '/Users/songyihang/Documents/Courses/CPSC304/cs304-project/sql/airlines.txt ' into table airlines
+fields terminated by '\t';
+
+load data local infile '/Users/songyihang/Documents/Courses/CPSC304/cs304-project/sql/arrivals.txt ' into table arrival_flight
+fields terminated by '\t';
+
+load data local infile '/Users/songyihang/Documents/Courses/CPSC304/cs304-project/sql/departure.txt ' into table departure_flight
+fields terminated by '\t';
+
+load data local infile '/Users/songyihang/Documents/Courses/CPSC304/cs304-project/sql/passenger.txt ' into table passenger
+fields terminated by '\t';
+
+load data local infile '/Users/songyihang/Documents/Courses/CPSC304/cs304-project/sql/baggage.txt ' into table baggage
+fields terminated by '\t';
+
+load data local infile '/Users/songyihang/Documents/Courses/CPSC304/cs304-project/sql/uses.txt ' into table uses
+fields terminated by '\t';
+
+load data local infile '/Users/songyihang/Documents/Courses/CPSC304/cs304-project/sql/restaurants.txt ' into table restaurant
+fields terminated by '\t';
+
+load data local infile '/Users/songyihang/Documents/Courses/CPSC304/cs304-project/sql/shops.txt ' into table shop
+fields terminated by '\t';
+
+load data local infile '/Users/songyihang/Documents/Courses/CPSC304/cs304-project/sql/CustomerService.txt ' into table customer_service
+fields terminated by '\t';
