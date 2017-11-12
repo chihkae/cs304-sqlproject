@@ -28,7 +28,7 @@ public class Query {
         return selectStatement.executeQuery();
     }
 
-    public static ResultSet addNewPassenger(int flightNumber, Date departureDate, String passengerName,
+    public static boolean addNewPassenger(int flightNumber, Date departureDate, String passengerName,
                                             int phoneNumber, String address) throws SQLException {
         String insertString =
                 "insert into passenger(flight_number, departure_date, name, phone_number, address) " +
@@ -41,11 +41,11 @@ public class Query {
         insertStatement.setInt(4, phoneNumber);
         insertStatement.setString(5, address);
 
-        return insertStatement.executeQuery();
+        return insertStatement.execute();
 
     }
 
-    public static int changeAirline(int passengerId, String newAirlineName) throws Exception {
+    public static int changeAirline(int passengerId, String newAirlineName) throws SQLException {
         // only applies to departure.
         // It should change the flight and try to find a flight
         // that has the same destination + same date + different airline.
