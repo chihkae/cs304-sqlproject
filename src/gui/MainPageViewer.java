@@ -5,7 +5,7 @@ public class MainPageViewer {
     public static final int WIDTH = 1000;
     public static final int HEIGHT = 800;
 
-    public static void main(String[] args)
+    public static void startPageViewer()
     {
         JFrame frame = new JFrame("Main Page");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

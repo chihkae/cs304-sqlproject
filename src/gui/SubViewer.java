@@ -63,6 +63,7 @@ public class SubViewer {
             this.fArr = fArr;
             this.tArr = tArr;
         }
+
         @Override
         public void actionPerformed(ActionEvent e) {
             for(int i = 0; i < tArr.length; i++){
@@ -72,15 +73,15 @@ public class SubViewer {
                         break;
                     case INTEGER:
                         int c = checkInteger(str);
-                        System.out.println(c);
+                        //System.out.println(c);
                         break;
                     case DATE:
                         String d = checkDate(str);
-                        System.out.println(d);
+                        //System.out.println(d);
                         break;
                     case TIME:
                         String t = checkTime(str);
-                        System.out.println(t);
+                        //System.out.println(t);
                         break;
                 }
             }
@@ -91,7 +92,7 @@ public class SubViewer {
                 int i = Integer.parseInt(s);
                 return i;
             }catch(Exception e){
-                JOptionPane.showMessageDialog(null, "You should input Integers!", "Error Code 101", JOptionPane.ERROR_MESSAGE);
+                popOutWindow("You should input Integers!", "Error Code 101");
                 return -1;
             }
         }
@@ -103,7 +104,7 @@ public class SubViewer {
                     try{
                         String[] dateWithSlash = s.split("\\/");
                         if(dateWithSlash.length != 3){
-                            JOptionPane.showMessageDialog(null, "The format of input is yyyy-mm-dd or yyyy/mm/dd.", "Error Code 102", JOptionPane.ERROR_MESSAGE);
+                            popOutWindow("The format of input is yyyy-mm-dd or yyyy/mm/dd.", "Error Code 102");
                             return null;
                         }
                         int year = Integer.parseInt(dateWithSlash[0]);
@@ -111,14 +112,14 @@ public class SubViewer {
                         int day = Integer.parseInt(dateWithSlash[2]);
                         if(year > 0 && month >= 1 && month <= 12 &&
                                 day > 0 && day <= 31){
-                            JOptionPane.showMessageDialog(null, "Please input valid date!", "Error Code 103", JOptionPane.ERROR_MESSAGE);
+                            popOutWindow("Please input valid date!", "Error Code 103");
                             return s;
                         }
                     }catch(Exception exception){
-                        JOptionPane.showMessageDialog(null, "Please input valid date!", "Error Code 104", JOptionPane.ERROR_MESSAGE);
+                        popOutWindow("Please input valid date!", "Error Code 104");
                         return null;
                     }
-                    JOptionPane.showMessageDialog(null, "Please input valid date!", "Error Code 105", JOptionPane.ERROR_MESSAGE);
+                    popOutWindow("Please input valid date!", "Error Code 105");
                     return null;
                 }
                 int year = Integer.parseInt(dateParts[0]);
@@ -129,10 +130,10 @@ public class SubViewer {
                     return s;
                 }
             }catch(Exception e){
-                JOptionPane.showMessageDialog(null, "Please input valid date!", "Error Code 106", JOptionPane.ERROR_MESSAGE);
+                popOutWindow("Please input valid date!", "Error Code 106");
                 return null;
             }
-            JOptionPane.showMessageDialog(null, "Please input valid date!", "Error Code 107", JOptionPane.ERROR_MESSAGE);
+            popOutWindow("Please input valid date!", "Error Code 107");
             return null;
         }
 
@@ -141,7 +142,7 @@ public class SubViewer {
                 String[] timeParts = s.split("\\:");
                 if(timeParts.length != 3){
                     if(timeParts.length != 2){
-                        JOptionPane.showMessageDialog(null, "The format of time is hh:mm:ss or hh:mm", "Error Code 108", JOptionPane.ERROR_MESSAGE);
+                        popOutWindow("The format of time is hh:mm:ss or hh:mm", "Error Code 108");
                         return null;
                     }
                     int hourTwo = Integer.parseInt(timeParts[0]);
@@ -150,7 +151,7 @@ public class SubViewer {
                             minuteTwo >= 0 && minuteTwo <= 59)
                         return s;
                     else{
-                        JOptionPane.showMessageDialog(null, "Please input valid time!", "Error Code 109", JOptionPane.ERROR_MESSAGE);
+                        popOutWindow("Please input valid time!","Error Code 109");
                         return null;
                     }
                 }
@@ -162,12 +163,16 @@ public class SubViewer {
                         second >= 0 && second <= 59)
                     return s;
             }catch (Exception e){
-                JOptionPane.showMessageDialog(null, "Please input valid time!", "Error Code 110", JOptionPane.ERROR_MESSAGE);
+                popOutWindow("Please input valid time!","Error Code 110");
                 return null;
             }
-            JOptionPane.showMessageDialog(null, "Please input valid time!", "Error Code 111", JOptionPane.ERROR_MESSAGE);
+            popOutWindow("Please input valid time!","Error Code 111");
             return null;
         }
+    }
+
+    private void popOutWindow(String message, String error) {
+        JOptionPane.showMessageDialog(null, message, error, JOptionPane.ERROR_MESSAGE);
     }
 
     class BackListener implements ActionListener{
@@ -175,6 +180,13 @@ public class SubViewer {
         public void actionPerformed(ActionEvent e) {
             frame.setVisible(false);
             MainPagePanel.getInstance().setInvisible(true);
+        }
+    }
+
+    class ExitListener implements ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.exit(0);
         }
     }
 }
