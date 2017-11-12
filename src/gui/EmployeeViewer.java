@@ -4,33 +4,16 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.io.BufferedReader;
-import java.io.FileReader;
 
 public class EmployeeViewer extends SubViewer {
     private JPanel employeePanel;
     private JPanel buttonPanel;
-    private String test;
+    //private String test;
 
     private static EmployeeViewer instance;
 
     public EmployeeViewer(){
         super();
-        try {
-            BufferedReader br = new BufferedReader(new FileReader("test.txt"));
-            StringBuilder sb = new StringBuilder();
-            String line = br.readLine();
-
-            while (line != null) {
-                sb.append(line);
-                sb.append(System.lineSeparator());
-                line = br.readLine();
-            }
-            test = sb.toString();
-            br.close();
-        } catch(Exception e) {
-            test = "Cannot solve";
-        }
         setFrameTitle("Employee Page");
         createPanel();
 
@@ -46,10 +29,6 @@ public class EmployeeViewer extends SubViewer {
     private void createPanel(){
         employeePanel = new JPanel();
         employeePanel.setLayout(new BorderLayout());
-//        scrollPane = new JScrollPane();
-//        displayPanel = new JPanel();
-//        displayPanel.setLayout(new BorderLayout());
-//        displayPanel.setPreferredSize(new Dimension(900, MainPageViewer.HEIGHT));
         buttonPanel = new JPanel();
         buttonPanel.setPreferredSize(new Dimension(100, MainPageViewer.HEIGHT));
         buttonPanel.setLayout(new GridLayout(7, 1));
@@ -59,12 +38,23 @@ public class EmployeeViewer extends SubViewer {
 
         JButton back = new JButton("<Back");
         JPanel backPanel = new JPanel();
+
+        JButton exit = new JButton("EXIT");
+        exit.addActionListener(new ExitListener());
+
         backPanel.add(back);
+        backPanel.add(exit);
         back.addActionListener(new BackListener());
+
+        JPanel titlePanel = new JPanel();
+        JLabel title = new JLabel("Employee");
+        title.setFont(title.getFont().deriveFont(20f));
+        titlePanel.add(title);
 
         employeePanel.add(buttonPanel, BorderLayout.WEST);
         employeePanel.add(displayPanel, BorderLayout.CENTER);
         employeePanel.add(backPanel, BorderLayout.SOUTH);
+        employeePanel.add(titlePanel, BorderLayout.NORTH);
 
     }
 
@@ -123,7 +113,7 @@ public class EmployeeViewer extends SubViewer {
         oldPanel = searchPanel;
         // TODO: scroll panel for table
 
-        JTextArea area = new JTextArea(test);
+        JTextArea area = new JTextArea();
         scrollPane.setViewportView(area);
         displayPanel.add(scrollPane, BorderLayout.CENTER);
     }
@@ -188,7 +178,7 @@ public class EmployeeViewer extends SubViewer {
         oldPanel = mainPanel;
 
         // TODO: gui
-        JTextArea area = new JTextArea(test);
+        JTextArea area = new JTextArea();
         scrollPane.setViewportView(area);
         displayPanel.add(scrollPane, BorderLayout.CENTER);
     }
@@ -214,7 +204,7 @@ public class EmployeeViewer extends SubViewer {
         oldPanel = searchPanel;
         // TODO: scroll panel for table
 
-        JTextArea area = new JTextArea(test);
+        JTextArea area = new JTextArea();
         scrollPane.setViewportView(area);
         displayPanel.add(scrollPane, BorderLayout.CENTER);
     }
@@ -244,7 +234,7 @@ public class EmployeeViewer extends SubViewer {
         oldPanel = searchPanel;
         // TODO: scroll panel for table
 
-        JTextArea area = new JTextArea(test);
+        JTextArea area = new JTextArea();
         scrollPane.setViewportView(area);
         displayPanel.add(scrollPane, BorderLayout.CENTER);
     }
@@ -269,7 +259,7 @@ public class EmployeeViewer extends SubViewer {
         oldPanel = searchPanel;
         // TODO: scroll panel for table
 
-        JTextArea area = new JTextArea(test);
+        JTextArea area = new JTextArea();
         scrollPane.setViewportView(area);
         displayPanel.add(scrollPane, BorderLayout.CENTER);
     }
@@ -299,7 +289,7 @@ public class EmployeeViewer extends SubViewer {
         oldPanel = searchPanel;
         // TODO: scroll panel for table
 
-        JTextArea area = new JTextArea(test);
+        JTextArea area = new JTextArea();
         scrollPane.setViewportView(area);
         displayPanel.add(scrollPane, BorderLayout.CENTER);
     }
@@ -312,7 +302,7 @@ public class EmployeeViewer extends SubViewer {
 //        oldPanel = searchPanel;
         // TODO: scroll panel for table
 
-        JTextArea area = new JTextArea(test);
+        JTextArea area = new JTextArea();
         scrollPane.setViewportView(area);
         displayPanel.add(scrollPane, BorderLayout.CENTER);
     }
@@ -325,15 +315,6 @@ public class EmployeeViewer extends SubViewer {
             frame.revalidate();
         }
     }
-
-//    private void removePanels() {
-//        if(oldPanel != null){
-//            displayPanel.remove(oldPanel);
-//        }
-//        if(scrollPane != null){
-//            displayPanel.remove(scrollPane);
-//        }
-//    }
 
     class AddPassengerListener implements ActionListener{
         @Override
