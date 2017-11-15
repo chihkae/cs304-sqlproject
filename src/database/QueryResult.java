@@ -12,21 +12,25 @@ public class QueryResult {
         int numCols = resultSetMetaData.getColumnCount();
 
         List<List<Object>> listResult = new ArrayList<>();
-        List<Object> columnNames = new ArrayList<>();
 
-        addColumnNames(resultSetMetaData, columnNames, numCols);
+        addColumnNamesToListResult(listResult, resultSetMetaData, numCols);
         addResultSetRowsToListResult(listResult, rs, numCols);
 
         Object[][] arrayResult = listResult.stream().map(List::toArray).toArray(Object[][]::new);
         return arrayResult;
     }
 
-    public static void addColumnNames(ResultSetMetaData resultSetMetaData, List<Object> columnNames,
-                                      int numCols) throws SQLException {
+    public static void addColumnNamesToListResult(List<List<Object>> listResult,
+                                                  ResultSetMetaData resultSetMetaData,
+                                                  int numCols) throws SQLException {
+        List<Object> columnNames = new ArrayList<>();
+
         for (int x = 1; x <= numCols; x++) {
             // System.out.println(resultSetMetaData.getColumnName(x));
             columnNames.add(resultSetMetaData.getColumnName(x));
         }
+
+        listResult.add(columnNames);
     }
 
     public static void addResultSetRowsToListResult(List<List<Object>> listResult,

@@ -10,7 +10,7 @@ public class QueryResultTest {
     @Test
     public void test1() {
         try {
-            ResultSet rs = Query.showAllPassengers();
+            ResultSet rs = Query.findLostBaggage(4);
             Object[][] object2dArray = QueryResult.parseResultSet(rs);
             printOutObjects(object2dArray);
         } catch (SQLException ex) {
@@ -24,6 +24,7 @@ public class QueryResultTest {
             for (Object o : objArr) {
                 System.out.println(o);
             }
+            System.out.println("======== REACHED THE END OF THE ARRAY. ========");
         }
     }
 }
