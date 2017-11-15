@@ -17,6 +17,7 @@
 5. Go to ```File``` -> ```Project Structure``` -> ```Project Compiler Output```.
 Inside that, enter something like ```C:<some-path>\cs304-project\out```
 6. Then go to the ```Modules``` > ```Paths``` and make sure you are inheriting the project compile path
+7. To setup JUnit, follow this [link right here](https://stackoverflow.com/questions/19330832/setting-up-junit-with-intellij-idea)
 
 
 ## TODOs
