@@ -4,44 +4,28 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.FileReader;
 
 public class PassengerViewer extends SubViewer{
     private JPanel passengerPanel;
     private JPanel buttonPanel;
-    private String test;
+    private int id;
+    //private String test;
 
     private static PassengerViewer instance;
 
-    public PassengerViewer()
+    public PassengerViewer(int id)
     {
         super();
 
-        try {
-            BufferedReader br = new BufferedReader(new FileReader("test.txt"));
-            StringBuilder sb = new StringBuilder();
-            String line = br.readLine();
-
-            while (line != null) {
-                sb.append(line);
-                sb.append(System.lineSeparator());
-                line = br.readLine();
-            }
-            test = sb.toString();
-            br.close();
-        } catch(Exception e) {
-            test = "Cannot solve";
-        }
-
+        this.id = id;
         setFrameTitle("Passenger Page");
         createPanel();
         frame.add(passengerPanel);
     }
 
-    public static PassengerViewer getInstance() {
+    public static PassengerViewer getInstance(int id) {
         if(instance == null)
-            instance = new PassengerViewer();
+            instance = new PassengerViewer(id);
         return instance;
     }
 
@@ -60,12 +44,23 @@ public class PassengerViewer extends SubViewer{
 
         JButton back = new JButton("<Back");
         JPanel backPanel = new JPanel();
+
+        JButton exit = new JButton("EXIT");
+        exit.addActionListener(new ExitListener());
+
         backPanel.add(back);
+        backPanel.add(exit);
         back.addActionListener(new BackListener());
+
+        JPanel titlePanel = new JPanel();
+        JLabel title = new JLabel("Passenger");
+        title.setFont(title.getFont().deriveFont(20f));
+        titlePanel.add(title);
 
         passengerPanel.add(buttonPanel, BorderLayout.WEST);
         passengerPanel.add(displayPanel, BorderLayout.CENTER);
         passengerPanel.add(backPanel, BorderLayout.SOUTH);
+        passengerPanel.add(titlePanel, BorderLayout.NORTH);
     }
 
     private void addButtonToPanel(){
@@ -123,8 +118,8 @@ public class PassengerViewer extends SubViewer{
         displayPanel.add(mainPanel, BorderLayout.NORTH);
         oldPanel = mainPanel;
 
-        JTextArea area = new JTextArea(test);
-        scrollPane.setViewportView(area);
+        //JTextArea area = new JTextArea();
+        scrollPane.setViewportView(createTable());
         displayPanel.add(scrollPane, BorderLayout.CENTER);
     }
 
@@ -144,5 +139,26 @@ public class PassengerViewer extends SubViewer{
             addPanel(text, label, f);
             frame.revalidate();
         }
+    }
+
+    private JTable createTable(){
+        String[] columnNames = {"First Name",
+                "Last Name",
+                "Sport",
+                "# of Years",
+                "Vegetarian"};
+        Object[][] data = {
+                {"Kathy", "Smith",
+                        "Snowboarding", new Integer(5), new Boolean(false)},
+                {"John", "Doe",
+                        "Rowing", new Integer(3), new Boolean(true)},
+                {"Sue", "Black",
+                        "Knitting", new Integer(2), new Boolean(false)},
+                {"Jane", "White",
+                        "Speed reading", new Integer(20), new Boolean(true)},
+                {"Joe", "Brown",
+                        "Pool", new Integer(10), new Boolean(false)}
+        };
+        return new JTable(data, columnNames);
     }
 }
