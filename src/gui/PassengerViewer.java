@@ -121,9 +121,9 @@ public class PassengerViewer extends SubViewer{
         displayPanel.add(mainPanel, BorderLayout.NORTH);
         oldPanel = mainPanel;
 
-        //JTextArea area = new JTextArea();
-//        scrollPane.setViewportView(createTable());
-//        displayPanel.add(scrollPane, BorderLayout.CENTER);
+        JTextArea area = new JTextArea();
+        scrollPane.setViewportView(area);
+        displayPanel.add(scrollPane, BorderLayout.CENTER);
     }
 
     class ButtonListener implements ActionListener{

@@ -1,10 +1,12 @@
-1	SHAN005	2017/11/08	Bill Cinton	893-324-3432	534 E. Vale Rd. Winona, MN 55987
-2	LIM005	2017/11/10	Jose Altuve 	787-232-2323	7098 Country Club Road Reno, NV 89523
-3	HOU006	2017/11/09	Carlos Correa	898-232-2131	7570 South St. Battle Creek, MI 49015
-4	LIM005	2017/11/10	Alex Straton	343-343-3433	291 Creek Rd. Powhatan, VA 23139
-5	CAN005	2017/11/08	Juan Carlos	343-343-3433	63 George Drive Elkhart, IN 46514
-6	MLB005	2017/11/08	Billy Barnes	232-342-6566	448 S. County Drive Quincy, MA 02169
-7	LAX006	2017/11/10	George Berg	343-343-2242    9705 Meadow Court Villa Park, IL 60181
-8	LAX005	2017/11/09	Lucas Li 	765-657-2353	83 Harvard Street Dracut, MA 01826
-9 	LIM007 	2017/11/10	Nick Garios	343-535-3343	9125 SW. Rockaway Lane Mableton, GA 30126
-10	CAN006	2017/11/08	Mark Texeria	903-342-2423	7225 Liberty Lane Bolingbrook, IL 60440
+1	SHAN005	2017/11/08	\N	\N	Bill Cinton	893-324-3432","534 E. Vale Rd. Winona, MN 55987
+2	LIM005	2017/11/10	Jose Altuve	787-232-2323	7098 Country Club Road Reno, NV 89523
+3	HOU006	2017/11/09	\N	\N	Carlos Correa	898-232-2131	7570 South St. Battle Creek, MI 49015
+4	LIM005	2017/11/10	\N	\N	Alex Straton	343-343-3433	291 Creek Rd. Powhatan, VA 23139
+5	CAN005	2017/11/08	\N	\N	Juan Carlos	343-343-3433	63 George Drive Elkhart, IN 46514
+6	MLB005	2017/11/08	\N	\N	Billy Barnes	232-342-6566	448 S. County Drive Quincy, MA 02169
+7	LAX006	2017/11/10	\N	\N	George Berg	343-343-2242    9705  Meadow Court Villa Park, IL 60181
+8	LAX005	2017/11/09	\N	\N	Lucas Li 	765-657-2353	83 Harvard Street Dracut, MA 01826
+9 	LIM007 	2017/11/10	\N	\N	Nick Garios	343-535-3343	9125 SW. Rockaway Lane Mableton, GA 30126
+10	CAN006	2017/11/08	\N	\N	Mark Texeria	903-342-2423	7225 Liberty Lane Bolingbrook, IL 60440
+11	\N	\N	MLB105	2017/11/08	Robinson	343-343-3434	Main Road, Banckod, IL 3434
+12	\N	\N	LIM106	2017/11/09	Jose	232-232-2322	SMT RD., SDFDG, BS 3434

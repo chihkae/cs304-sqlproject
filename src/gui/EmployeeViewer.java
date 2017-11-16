@@ -1,9 +1,14 @@
 package gui;
 
+import database.Query;
+import database.QueryResult;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class EmployeeViewer extends SubViewer {
     private JPanel employeePanel;
@@ -176,9 +181,14 @@ public class EmployeeViewer extends SubViewer {
         oldPanel = mainPanel;
 
         // TODO: gui
-        JTextArea area = new JTextArea();
-        scrollPane.setViewportView(area);
-        displayPanel.add(scrollPane, BorderLayout.CENTER);
+        //JTextArea area = new JTextArea();
+        try {
+            Object[][] resultSet = QueryResult.parseResultSet(Query.showAllPassengers());
+            scrollPane.setViewportView(new JTable(copyArray(resultSet), resultSet[0]));
+            displayPanel.add(scrollPane, BorderLayout.CENTER);
+        } catch (SQLException e) {
+            popOutWindow(e.getMessage(), "Error Code 112");
+        }
     }
 
     protected void changeAirline(){
@@ -232,9 +242,14 @@ public class EmployeeViewer extends SubViewer {
         oldPanel = searchPanel;
         // TODO: scroll panel for table
 
-        JTextArea area = new JTextArea();
-        scrollPane.setViewportView(area);
-        displayPanel.add(scrollPane, BorderLayout.CENTER);
+        //JTextArea area = new JTextArea();
+        try {
+            Object[][] resultSet = QueryResult.parseResultSet(Query.showAllArrivalFlights());
+            scrollPane.setViewportView(new JTable(copyArray(resultSet),resultSet[0]));
+            displayPanel.add(scrollPane, BorderLayout.CENTER);
+        } catch (SQLException e) {
+            popOutWindow(e.getMessage(), "Error Code 113");
+        }
     }
 
     protected void removePassenger(){
@@ -257,9 +272,13 @@ public class EmployeeViewer extends SubViewer {
         oldPanel = searchPanel;
         // TODO: scroll panel for table
 
-        JTextArea area = new JTextArea();
-        scrollPane.setViewportView(area);
-        displayPanel.add(scrollPane, BorderLayout.CENTER);
+        try {
+            Object[][] resultSet = QueryResult.parseResultSet(Query.showAllPassengers());
+            scrollPane.setViewportView(new JTable(copyArray(resultSet), resultSet[0]));
+            displayPanel.add(scrollPane, BorderLayout.CENTER);
+        } catch (SQLException e) {
+            popOutWindow(e.getMessage(), "Error Code 114");
+        }
     }
 
     protected void updateDepartureFlight(){
@@ -287,9 +306,13 @@ public class EmployeeViewer extends SubViewer {
         oldPanel = searchPanel;
         // TODO: scroll panel for table
 
-        JTextArea area = new JTextArea();
-        scrollPane.setViewportView(area);
-        displayPanel.add(scrollPane, BorderLayout.CENTER);
+        try {
+            Object[][] resultSet = QueryResult.parseResultSet(Query.showAllDepartureFlights());
+            scrollPane.setViewportView(new JTable(copyArray(resultSet),resultSet[0]));
+            displayPanel.add(scrollPane, BorderLayout.CENTER);
+        } catch (SQLException e) {
+            popOutWindow(e.getMessage(), "Error Code 115");
+        }
     }
 
     protected void showNumOfPassenger(){
@@ -300,9 +323,13 @@ public class EmployeeViewer extends SubViewer {
 //        oldPanel = searchPanel;
         // TODO: scroll panel for table
 
-        JTextArea area = new JTextArea();
-        scrollPane.setViewportView(area);
-        displayPanel.add(scrollPane, BorderLayout.CENTER);
+        try {
+            Object[][] resultSet = QueryResult.parseResultSet(Query.showPassengersCountOnEachDepartureFlight());
+            scrollPane.setViewportView(new JTable(copyArray(resultSet),resultSet[0]));
+            displayPanel.add(scrollPane, BorderLayout.CENTER);
+        } catch (SQLException e) {
+            popOutWindow(e.getMessage(), "Error Code 116");
+        }
     }
 
     class BaggageListener implements ActionListener{

@@ -70,8 +70,8 @@ public class SubViewer {
          */
         Flag[] fArr;
         MethodFlag mf;
-        ArrayList<Integer> resultIntegers = new ArrayList<>();
-        ArrayList<String> resultStrings = new ArrayList<>();
+        ArrayList<Integer> resultIntegers;
+        ArrayList<String> resultStrings;
         //Query q = new Query();
         public EnterListener(JTextField[] tArr, Flag[] fArr, MethodFlag mf){
             this.fArr = fArr;
@@ -81,6 +81,8 @@ public class SubViewer {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            resultIntegers = new ArrayList<>();
+            resultStrings = new ArrayList<>();
             for(int i = 0; i < tArr.length; i++){
                 String str = tArr[i].getText();
                 switch (fArr[i]){
@@ -104,12 +106,17 @@ public class SubViewer {
                 }
             }
 
+            if(scrollPane != null)
+                displayPanel.remove(scrollPane);
+
             switch (mf){
                 case LOUNGE:
                     //System.out.println("get");
                     getVIPLounge(resultIntegers.get(0));
                     break;
                 case FINDLOSTBAGGAGE:
+                    getLostBaggage(resultIntegers.get(0));
+                    break;
                 case REMOVEPASSENGER:
                 case RATING:
                 case RESTAURANT:
@@ -123,16 +130,26 @@ public class SubViewer {
 
         private void getVIPLounge(int pid){
             try {
-                resultSet = QueryResult.parseResultSet(Query.vipLoungAvailable(pid));
-                //System.out.println(resultSet.length);
-                //System.out.println(resultSet[0][0]);
-                scrollPane.setViewportView(new JTable(copyArray(resultSet), resultSet[0]));
+                //resultSet = QueryResult.parseResultSet(Query.vipLoungeAvailable(pid));
+                scrollPane = new JScrollPane(new JTextArea(Query.vipLoungeAvailable(pid)));
+//                scrollPane.setViewportView(new JTable(copyArray(resultSet), resultSet[0]));
                 displayPanel.add(scrollPane, BorderLayout.CENTER);
                 frame.revalidate();
-                //        scrollPane.setViewportView(createTable());
-//        displayPanel.add(scrollPane, BorderLayout.CENTER);
             } catch (SQLException e) {
                 System.out.println(e);
+                //popOutWindow(e.getMessage(), "Error Code 117");
+            }
+        }
+
+        private void getLostBaggage(int pid){
+            try{
+                resultSet = QueryResult.parseResultSet(Query.findLostBaggage(pid));
+                scrollPane = new JScrollPane(new JTable(copyArray(resultSet), resultSet[0]));
+//                scrollPane.setViewportView(new JTable(copyArray(resultSet), resultSet[0]));
+                displayPanel.add(scrollPane, BorderLayout.CENTER);
+                frame.revalidate();
+            }catch(SQLException e){
+                popOutWindow(e.getMessage(), "Error Code 118");
             }
         }
 
@@ -220,7 +237,7 @@ public class SubViewer {
         }
     }
 
-    private void popOutWindow(String message, String error) {
+    protected void popOutWindow(String message, String error) {
 //        ImageIcon icon = new ImageIcon(PATH);
 //        Image image = icon.getImage();
 //        Image scaled = image.getScaledInstance(80,80, java.awt.Image.SCALE_SMOOTH);
@@ -242,7 +259,7 @@ public class SubViewer {
         }
     }
 
-    private Object[][] copyArray(Object[][] o){
+    protected Object[][] copyArray(Object[][] o){
         Object[][] subcopy = new Object[o.length][o[0].length];
         for(int i = 1; i < o.length; i++){
            subcopy[i] = o[i];
