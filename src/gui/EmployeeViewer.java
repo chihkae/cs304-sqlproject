@@ -34,7 +34,7 @@ public class EmployeeViewer extends SubViewer {
         employeePanel = new JPanel(new BorderLayout());
         buttonPanel = new JPanel();
         buttonPanel.setPreferredSize(new Dimension(120, MainPageViewer.HEIGHT));
-        buttonPanel.setLayout(new GridLayout(7, 1));
+        buttonPanel.setLayout(new GridLayout(8, 1));
 
 
         addButtonIntoPanel();
@@ -65,7 +65,7 @@ public class EmployeeViewer extends SubViewer {
         String[] nameList = {"<html>Find<br />lost<br />baggage</html>", "<html>Add new<br />passenger</html>",
                 "<html>Change<br />airline</html>", "<html>Update<br />arrival<br />flight</html>",
                 "<html>Remove<br />passenger</html>", "<html>Show<br /># of<br />passengers<br />on each<br />flight</html>",
-                "<html>Update<br />departure<br />flight</html>"};
+                "<html>Update<br />departure<br />flight</html>", "<html>Show<br />passengers</html>"};
         for(int i = 0; i < nameList.length; i++){
             ActionListener actionListener;
             switch (i){
@@ -87,8 +87,11 @@ public class EmployeeViewer extends SubViewer {
                 case 5:
                     actionListener = new ShowNumOfPassengerListener();
                     break;
-                default:
+                case 6:
                     actionListener = new AddListener(MethodFlag.UPDATEDEPARTURE);
+                    break;
+                default:
+                    actionListener = new ShowPassengerInfo();
                     break;
             }
             JButton button = new JButton(nameList[i]);
@@ -326,6 +329,16 @@ public class EmployeeViewer extends SubViewer {
         }
     }
 
+    protected void showPassengers(){
+        try {
+            Object[][] resultSet = QueryResult.parseResultSet(Query.showAllPassengers());
+            scrollPane.setViewportView(new JTable(copyArray(resultSet),resultSet[0]));
+            displayPanel.add(scrollPane, BorderLayout.CENTER);
+        } catch (SQLException e) {
+            popOutWindow(e.getMessage(), "Error Code 116");
+        }
+    }
+
     class AddListener implements ActionListener{
         private MethodFlag mf;
         public AddListener(MethodFlag mf){
@@ -364,6 +377,15 @@ public class EmployeeViewer extends SubViewer {
         public void actionPerformed(ActionEvent e) {
             removePanels();
             showNumOfPassenger();
+            frame.revalidate();
+        }
+    }
+
+    class ShowPassengerInfo implements ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            removePanels();
+            showPassengers();
             frame.revalidate();
         }
     }
