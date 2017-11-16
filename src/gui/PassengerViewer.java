@@ -1,9 +1,13 @@
 package gui;
 
+import database.Query;
+import database.QueryResult;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 public class PassengerViewer extends SubViewer{
     private JPanel passengerPanel;
@@ -121,9 +125,19 @@ public class PassengerViewer extends SubViewer{
         displayPanel.add(mainPanel, BorderLayout.NORTH);
         oldPanel = mainPanel;
 
-        JTextArea area = new JTextArea();
-        scrollPane.setViewportView(area);
-        displayPanel.add(scrollPane, BorderLayout.CENTER);
+        if(mf == MethodFlag.RESTAURANT){
+            try {
+                resultSet = QueryResult.parseResultSet(Query.showAllRestaurants());
+                scrollPane.setViewportView(new JTable(copyArray(resultSet), resultSet[0]));
+                displayPanel.add(scrollPane, BorderLayout.CENTER);
+            } catch (SQLException e) {
+                popOutWindow(e.getMessage(), "Error Code 118");
+            }
+        }else{
+            JTextArea area = new JTextArea();
+            scrollPane.setViewportView(area);
+            displayPanel.add(scrollPane, BorderLayout.CENTER);
+        }
     }
 
     class ButtonListener implements ActionListener{

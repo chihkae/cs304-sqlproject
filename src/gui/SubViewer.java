@@ -87,6 +87,7 @@ public class SubViewer {
                 String str = tArr[i].getText();
                 switch (fArr[i]){
                     case CHAR:
+                        resultStrings.add(str);
                         break;
                     case INTEGER:
                         int c = checkInteger(str);
@@ -119,9 +120,15 @@ public class SubViewer {
                     break;
                 case REMOVEPASSENGER:
                 case RATING:
+                    getHereRating(resultIntegers.get(0));
+                    break;
                 case RESTAURANT:
+                    getFavouriteRestaurant(resultStrings.get(0));
+                    break;
                 case CHANGEAIRINE:
                 case NONENGSERVICE:
+                    getNonEnglishService(resultIntegers.get(0));
+                    break;
                 case UPDATEARRIVAL:
                 case ADDNEWPASSENGER:
                 case UPDATEDEPARTURE:
@@ -136,8 +143,32 @@ public class SubViewer {
                 displayPanel.add(scrollPane, BorderLayout.CENTER);
                 frame.revalidate();
             } catch (SQLException e) {
-                System.out.println(e);
+                popOutWindow(e.getMessage(), "Error Code 120");
                 //popOutWindow(e.getMessage(), "Error Code 117");
+            }
+        }
+
+        private void getNonEnglishService(int pid){
+            try {
+                scrollPane = new JScrollPane(new JTextArea(Query.nonEnglish_exch(pid)));
+//                scrollPane.setViewportView(new JTable(copyArray(resultSet), resultSet[0]));
+                displayPanel.add(scrollPane, BorderLayout.CENTER);
+                frame.revalidate();
+            } catch (SQLException e) {
+                System.out.println(e);
+                //popOutWindow(e.getMessage(), "Error Code 119");
+            }
+        }
+
+        private void getHereRating(int pid){
+            try{
+                resultSet = QueryResult.parseResultSet(Query.ateHereStars(pid));
+                scrollPane = new JScrollPane(new JTable(copyArray(resultSet), resultSet[0]));
+//                scrollPane.setViewportView(new JTable(copyArray(resultSet), resultSet[0]));
+                displayPanel.add(scrollPane, BorderLayout.CENTER);
+                frame.revalidate();
+            }catch(SQLException e){
+                popOutWindow(e.getMessage(), "Error Code 118");
             }
         }
 
@@ -153,12 +184,31 @@ public class SubViewer {
             }
         }
 
+        private void getFavouriteRestaurant(String name){
+            try{
+                if(name.length() == 0)
+                    resultSet = QueryResult.parseResultSet(Query.showAllRestaurants());
+                else
+                    resultSet = QueryResult.parseResultSet(Query.favoriteLocation(name));
+                scrollPane = new JScrollPane(new JTable(copyArray(resultSet), resultSet[0]));
+                displayPanel.add(scrollPane, BorderLayout.CENTER);
+                frame.revalidate();
+            }catch(SQLException e){
+                popOutWindow(e.getMessage(), "Error Code 121");
+            }
+        }
+
         private int checkInteger(String s){
             try{
                 int i = Integer.parseInt(s);
-                return i;
+                if(i > 0)
+                    return i;
+                else{
+                    popOutWindow("You should input positive integers!", "Error Code 101");
+                    return -1;
+                }
             }catch(Exception e){
-                popOutWindow("You should input Integers!", "Error Code 101");
+                popOutWindow("You should input integers!", "Error Code 101");
                 return -1;
             }
         }

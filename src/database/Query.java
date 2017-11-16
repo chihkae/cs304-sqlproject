@@ -108,9 +108,9 @@ public class Query {
     public static ResultSet showPassengersCountOnEachDepartureFlight() throws SQLException {
         // only applies to departure flight
         String selectString =
-                "select df.flight_number, .df.flight_date, COUNT(*) " +
+                "select df.flight_number, .df.departure_date, COUNT(*) " +
                         "from passenger p, departure_flight df " +
-                        "where p.flight_number = df.flight_number "+
+                        "where p.departure_flight_number = df.flight_number "+
                         "and p.departure_date = df.departure_date "+
                         "group by df.flight_number, df.departure_date";
 
@@ -230,20 +230,22 @@ public class Query {
                         "union all " +
                         "select distinct flight_number, terminal_number from arrival_flight) u, "+
                         "passenger p, customer_service cs " +
-                        "where p.id =? "+
-                        "and p.flight_number= u.flight_number "+
-                        "and u.terminal_number= cs.terminal_number "+
+                        "where p.id = ? "+
+                        "and p.flight_number = u.flight_number "+
+                        "and u.terminal_number = cs.terminal_number "+
                         "and cs.type LIKE '%Exchange%' ";
         PreparedStatement booleanStatement = getPreparedStatement(booleanString);
         booleanStatement.setInt(1, p_id);
         ResultSet rs= booleanStatement.executeQuery(booleanString);
-        Boolean vip_Lounge = rs.getBoolean("non_english_service");
-        if (vip_Lounge == true) {
-            String yesNonEnglish ="Yes! Non english service will be provided at the currency exchange";
-            return yesNonEnglish;
-        } else {
-            String noNonEnglish= "Sorry only english service is provided at the currency exchange";
-            return noNonEnglish;
+        try{
+            Boolean vip_Lounge = rs.getBoolean("non_english_service");
+            if (vip_Lounge) {
+                return "Yes! Non english service will be provided at the currency exchange";
+            } else {
+                return "Sorry only english service is provided at the currency exchange";
+            }
+        }catch(SQLException e){
+            return "Sorry only english service is provided at the currency exchange";
         }
 
     }
@@ -252,7 +254,7 @@ public class Query {
         String selectString =
                 "Select restaurant_name, terminal_number " +
                         "from restaurant r " +
-                        "where r.name= LIKE ?";
+                        "where r.restaurant_name LIKE ? ";
         PreparedStatement selectStatement = getPreparedStatement(selectString);
         selectStatement.setString(1, "%"+restaurantName+"%");
         return selectStatement.executeQuery();
@@ -262,7 +264,7 @@ public class Query {
         String selectString =
                 "Select distinct restaurant_name, yelp_rating " +
                         "from restaurant r, uses u " +
-                        "where u.pasenger_id=?, u.general_service_id= r.id";
+                        "where u.passenger_id=? and u.general_service_id= r.id";
         PreparedStatement selectStatement = getPreparedStatement(selectString);
         selectStatement.setInt(1, p_id);
         return selectStatement.executeQuery();
