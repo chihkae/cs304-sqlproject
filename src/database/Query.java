@@ -154,7 +154,7 @@ public class Query {
      * Passengers
      */
 
-    public static void vipLoungeAvailable(int p_id) throws SQLException {
+    public static ResultSet vipLoungeAvailable(int p_id) throws SQLException {
 
             String booleanString =
                     "select distinct vip_lounge " +
@@ -162,14 +162,15 @@ public class Query {
                             "from arrival_flight " +
                             "union all " +
                             "select distinct flight_number, terminal_number " +
-                            "from departure_flight) u, passenger35 p, terminals t " +
-                            "where p.id = ? " +
+                            "from departure_flight) u, passenger p, terminals t " +
+                            "where p.id = ?  " +
                             "and (p.departure_flight_number = u.flight_number " +
                             "or p.arrival_flight_number = u.flight_number) " +
                             "and u.terminal_number = t.terminal_number";
             PreparedStatement booleanStatement = getPreparedStatement(booleanString);
             booleanStatement.setInt(1, p_id);
-            ResultSet rs = booleanStatement.executeQuery();
+            return booleanStatement.executeQuery();
+            /*
             ResultSetMetaData rsmd = rs.getMetaData();
 
             // get number of columns
@@ -199,6 +200,7 @@ public class Query {
                     System.out.printf("Sorry there is currently no lounge available at your terminal!");
                 }
             }
+            */
 
     }
 
@@ -216,8 +218,8 @@ public class Query {
                         "and cs.type LIKE '%Exchange%' ";
         PreparedStatement booleanStatement = getPreparedStatement(booleanString);
         booleanStatement.setInt(1, p_id);
-        ResultSet rs = booleanStatement.executeQuery(booleanString);
-        return rs;
+        return booleanStatement.executeQuery(booleanString);
+
     }
 
     public static ResultSet favoriteLocation(String restaurantName) throws SQLException {
@@ -227,8 +229,7 @@ public class Query {
                         "where r.name= LIKE ?";
         PreparedStatement selectStatement = getPreparedStatement(selectString);
         selectStatement.setString(1, "%"+restaurantName+"%");
-        ResultSet rs = selectStatement.executeQuery();
-        return rs;
+        return selectStatement.executeQuery();
     }
 
     public static ResultSet atehereStars(int p_id) throws SQLException {
@@ -238,8 +239,7 @@ public class Query {
                         "where u.pasenger_id=?, u.general_service_id= r.id";
         PreparedStatement selectStatement = getPreparedStatement(selectString);
         selectStatement.setInt(1, p_id);
-        ResultSet rs = selectStatement.executeQuery();
-        return rs;
+        return selectStatement.executeQuery();
     }
 
     public static ResultSet showAllRestaurants() throws SQLException {
@@ -247,8 +247,8 @@ public class Query {
                 "Select *" +
                         "from restaurant";
         PreparedStatement selectStatement = getPreparedStatement(selectString);
-        ResultSet rs = selectStatement.executeQuery();
-        return rs;
+        return selectStatement.executeQuery();
+
     }
     public static ResultSet myInformationView(int p_id) throws SQLException{
         String selectView=
@@ -256,8 +256,7 @@ public class Query {
                         "as select *"+
                         "from passenger where id=?";
         PreparedStatement createViewStatement= getPreparedStatement(selectView);
-        ResultSet rs = createViewStatement.executeQuery();
-        return rs;
+        return createViewStatement.executeQuery();
     }
 
 
