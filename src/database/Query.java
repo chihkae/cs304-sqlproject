@@ -1,6 +1,7 @@
 package database;
 import database.DbConnection;
 
+import javax.xml.transform.Result;
 import java.sql.*;
 
 public class Query {
@@ -15,7 +16,7 @@ public class Query {
      * Employees
      */
 
-    public static boolean addNewPassenger(int passengerId, String departureFlightNumber, Date departureFlightDate,
+    public static int addNewPassenger(int passengerId, String departureFlightNumber, Date departureFlightDate,
                                          String passengerName, int phoneNumber, String address)
             throws SQLException {
         String insertString =
@@ -32,8 +33,15 @@ public class Query {
         insertStatement.setInt(7, phoneNumber);
         insertStatement.setString(8, address);
 
-        return insertStatement.execute();
+        return insertStatement.executeUpdate();
 
+    }
+    public static ResultSet showPassengers() throws SQLException{
+        String selectString=
+                "select * "+
+                        "from passenger p";
+        PreparedStatement selectStatement = getPreparedStatement(selectString);
+        return selectStatement.executeQuery();
     }
 
     public static int changeAirline(int passengerId, String newAirlineName) throws SQLException {
@@ -97,7 +105,7 @@ public class Query {
         return selectStatement.executeQuery();
     }
 
-    public static ResultSet showPassengersOnEachDepartureFlight() throws SQLException {
+    public static ResultSet showPassengersCountOnEachDepartureFlight() throws SQLException {
         // only applies to departure flight
         String selectString =
                 "select df.flight_number, .df.flight_date, COUNT(*) " +
@@ -161,7 +169,7 @@ public class Query {
      * Passengers
      */
 
-    public static ResultSet vipLoungeAvailable(int p_id) throws SQLException {
+    public static String vipLoungeAvailable(int p_id) throws SQLException {
 
             String booleanString =
                     "select distinct vip_lounge " +
@@ -176,7 +184,15 @@ public class Query {
                             "and u.terminal_number = t.terminal_number";
             PreparedStatement booleanStatement = getPreparedStatement(booleanString);
             booleanStatement.setInt(1, p_id);
-            return booleanStatement.executeQuery();
+            ResultSet rs= booleanStatement.executeQuery();
+            Boolean vip_Lounge = rs.getBoolean("vip_lounge");
+            if (vip_Lounge == true) {
+                String yesLounge ="VIP lounge is available for your trip at the terminal!";
+                return yesLounge;
+            } else {
+                String noLounge= "Sorry there is currently no lounge available at your terminal!";
+                return noLounge;
+            }
             /*
             ResultSetMetaData rsmd = rs.getMetaData();
 
@@ -212,7 +228,7 @@ public class Query {
     }
 
 
-    public static ResultSet nonEnglish_exch(int p_id) throws SQLException {
+    public static String nonEnglish_exch(int p_id) throws SQLException {
         String booleanString =
                 "Select distinct non_english_service " +
                         "from (select distinct flight_number, terminal_number from departure_flight " +
@@ -225,7 +241,15 @@ public class Query {
                         "and cs.type LIKE '%Exchange%' ";
         PreparedStatement booleanStatement = getPreparedStatement(booleanString);
         booleanStatement.setInt(1, p_id);
-        return booleanStatement.executeQuery(booleanString);
+        ResultSet rs= booleanStatement.executeQuery(booleanString);
+        Boolean vip_Lounge = rs.getBoolean("non_english_service");
+        if (vip_Lounge == true) {
+            String yesNonEnglish ="Yes! Non english service will be provided at the currency exchange";
+            return yesNonEnglish;
+        } else {
+            String noNonEnglish= "Sorry only english service is provided at the currency exchange";
+            return noNonEnglish;
+        }
 
     }
 
@@ -257,13 +281,21 @@ public class Query {
         return selectStatement.executeQuery();
 
     }
-    public static ResultSet myInformationView(int p_id) throws SQLException{
+    public static int myInformationView(int p_id) throws SQLException{
         String selectView=
-                "Create view v "+
+                "Create view ? "+
                         "as select * "+
                         "from passenger where id=?";
         PreparedStatement createViewStatement= getPreparedStatement(selectView);
-        return createViewStatement.executeQuery();
+        createViewStatement.setInt(1, p_id);
+        createViewStatement.setInt(2,p_id);
+        return createViewStatement.executeUpdate();
+    }
+    public static ResultSet showView(int p_id)throws SQLException{
+        String showView= "Select * from ?";
+        PreparedStatement showStatement = getPreparedStatement(showView);
+        showStatement.setInt(1,p_id);
+        return showStatement.executeQuery();
     }
 
 
