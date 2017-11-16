@@ -332,6 +332,27 @@ public class EmployeeViewer extends SubViewer {
         }
     }
 
+    class AddListener implements ActionListener{
+        private MethodFlag mf;
+        public AddListener(MethodFlag mf){
+            this.mf = mf;
+        }
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            removePanels();
+            switch (mf){
+                case FINDLOSTBAGGAGE:
+                case ADDNEWPASSENGER:
+                case CHANGEAIRINE:
+                case UPDATEARRIVAL:
+                case UPDATEDEPARTURE:
+                case REMOVEPASSENGER:
+                    break;
+            }
+            frame.revalidate();
+        }
+    }
+
     class BaggageListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {

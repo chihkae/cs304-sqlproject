@@ -284,14 +284,14 @@ public class Query {
                         "as select * "+
                         "from passenger where id=?";
         PreparedStatement createViewStatement= getPreparedStatement(selectView);
-        createViewStatement.setInt(1, p_id);
+        createViewStatement.setString(1, "Passenger"+p_id);
         createViewStatement.setInt(2,p_id);
         return createViewStatement.executeUpdate();
     }
     public static ResultSet showView(int p_id)throws SQLException{
         String showView= "Select * from ?";
         PreparedStatement showStatement = getPreparedStatement(showView);
-        showStatement.setInt(1,p_id);
+        showStatement.setString(1,"Passenger"+p_id);
         return showStatement.executeQuery();
     }
 
