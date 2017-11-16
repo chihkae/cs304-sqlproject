@@ -241,7 +241,7 @@ public class Query {
                         "and cs.type LIKE '%Exchange%' ";
         PreparedStatement booleanStatement = getPreparedStatement(booleanString);
         booleanStatement.setInt(1, p_id);
-        ResultSet rs= booleanStatement.executeQuery(booleanString);
+        ResultSet rs= booleanStatement.executeQuery();
         Boolean vip_Lounge = rs.getBoolean("non_english_service");
         if (vip_Lounge == true) {
             String yesNonEnglish ="Yes! Non english service will be provided at the currency exchange";
