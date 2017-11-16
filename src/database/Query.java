@@ -17,7 +17,7 @@ public class Query {
      */
 
     public static int addNewPassenger(int passengerId, String departureFlightNumber, Date departureFlightDate,
-                                      String passengerName, int phoneNumber, String address)
+                                         String passengerName, int phoneNumber, String address)
             throws SQLException {
         String insertString =
                 "insert into passenger values(?, ?, ?, ?, ?, ?, ?, ?)";
@@ -237,9 +237,10 @@ public class Query {
         PreparedStatement booleanStatement = getPreparedStatement(booleanString);
         booleanStatement.setInt(1, p_id);
         ResultSet rs= booleanStatement.executeQuery();
+
         try{
-            Boolean vip_Lounge = rs.getBoolean("non_english_service");
-            if (vip_Lounge) {
+            Boolean non_english_service = rs.getBoolean("non_english_service");
+            if (non_english_service) {
                 return "Yes! Non english service will be provided at the currency exchange";
             } else {
                 return "Sorry only english service is provided at the currency exchange";
@@ -284,14 +285,14 @@ public class Query {
                         "as select * "+
                         "from passenger where id=?";
         PreparedStatement createViewStatement= getPreparedStatement(selectView);
-        createViewStatement.setString(1, "Passenger"+p_id);
+        createViewStatement.setInt(1, p_id);
         createViewStatement.setInt(2,p_id);
         return createViewStatement.executeUpdate();
     }
     public static ResultSet showView(int p_id)throws SQLException{
         String showView= "Select * from ?";
         PreparedStatement showStatement = getPreparedStatement(showView);
-        showStatement.setString(1,"Passenger"+p_id);
+        showStatement.setInt(1,p_id);
         return showStatement.executeQuery();
     }
 
