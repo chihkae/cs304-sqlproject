@@ -70,25 +70,25 @@ public class EmployeeViewer extends SubViewer {
             ActionListener actionListener;
             switch (i){
                 case 0:
-                    actionListener = new BaggageListener();
+                    actionListener = new AddListener(MethodFlag.FINDLOSTBAGGAGE);
                     break;
                 case 1:
-                    actionListener = new AddPassengerListener();
+                    actionListener = new AddListener(MethodFlag.ADDNEWPASSENGER);
                     break;
                 case 2:
-                    actionListener = new ChangeAirlineListener();
+                    actionListener = new AddListener(MethodFlag.CHANGEAIRINE);
                     break;
                 case 3:
-                    actionListener = new UpdateArrivalFlightListener();
+                    actionListener = new AddListener(MethodFlag.UPDATEARRIVAL);
                     break;
                 case 4:
-                    actionListener = new RemovePassengerListener();
+                    actionListener = new AddListener(MethodFlag.REMOVEPASSENGER);
                     break;
                 case 5:
                     actionListener = new ShowNumOfPassengerListener();
                     break;
                 default:
-                    actionListener = new UpdateDepartureFlight();
+                    actionListener = new AddListener(MethodFlag.UPDATEDEPARTURE);
                     break;
             }
             JButton button = new JButton(nameList[i]);
@@ -336,75 +336,34 @@ public class EmployeeViewer extends SubViewer {
             removePanels();
             switch (mf){
                 case FINDLOSTBAGGAGE:
+                    findLostBaggagePanel();
+                    break;
                 case ADDNEWPASSENGER:
+                    addNewPassengerPanel();
+                    break;
                 case CHANGEAIRINE:
+                    changeAirline();
+                    break;
                 case UPDATEARRIVAL:
+                    updateArrivalFlight();
+                    break;
                 case UPDATEDEPARTURE:
+                    updateDepartureFlight();
+                    break;
                 case REMOVEPASSENGER:
+                    removePassenger();
                     break;
             }
             frame.revalidate();
         }
     }
 
-    class BaggageListener implements ActionListener{
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            removePanels();
-            findLostBaggagePanel();
-            frame.revalidate();
-        }
-    }
-
-    class AddPassengerListener implements ActionListener{
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            removePanels();
-            addNewPassengerPanel();
-            frame.revalidate();
-        }
-    }
-
-    class ChangeAirlineListener implements ActionListener{
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            removePanels();
-            changeAirline();
-            frame.revalidate();
-        }
-    }
-    class UpdateArrivalFlightListener implements ActionListener{
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            removePanels();
-            updateArrivalFlight();
-            frame.revalidate();
-        }
-    }
-
-    class RemovePassengerListener implements ActionListener{
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            removePanels();
-            removePassenger();
-            frame.revalidate();
-        }
-    }
 
     class ShowNumOfPassengerListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
             removePanels();
             showNumOfPassenger();
-            frame.revalidate();
-        }
-    }
-
-    class UpdateDepartureFlight implements ActionListener{
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            removePanels();
-            updateDepartureFlight();
             frame.revalidate();
         }
     }
