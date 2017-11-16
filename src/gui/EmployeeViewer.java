@@ -316,13 +316,7 @@ public class EmployeeViewer extends SubViewer {
     }
 
     protected void showNumOfPassenger(){
-//        JPanel searchPanel = new JPanel();
-//        JScrollPane scrollPane = new JScrollPane();
-//        searchPanel.add(scrollPane);
-//        displayPanel.add(searchPanel, BorderLayout.CENTER);
-//        oldPanel = searchPanel;
         // TODO: scroll panel for table
-
         try {
             Object[][] resultSet = QueryResult.parseResultSet(Query.showPassengersCountOnEachDepartureFlight());
             scrollPane.setViewportView(new JTable(copyArray(resultSet),resultSet[0]));
