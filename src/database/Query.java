@@ -242,8 +242,8 @@ public class Query {
         PreparedStatement booleanStatement = getPreparedStatement(booleanString);
         booleanStatement.setInt(1, p_id);
         ResultSet rs= booleanStatement.executeQuery();
-        Boolean vip_Lounge = rs.getBoolean("non_english_service");
-        if (vip_Lounge == true) {
+        Boolean non_english_service_ = rs.getBoolean("non_english_service");
+        if (non_english_service_ == true) {
             String yesNonEnglish ="Yes! Non english service will be provided at the currency exchange";
             return yesNonEnglish;
         } else {
