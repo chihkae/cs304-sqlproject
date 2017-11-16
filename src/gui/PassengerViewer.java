@@ -9,7 +9,6 @@ public class PassengerViewer extends SubViewer{
     private JPanel passengerPanel;
     private JPanel buttonPanel;
     private int id;
-    //private String test;
 
     private static PassengerViewer instance;
 
@@ -34,10 +33,10 @@ public class PassengerViewer extends SubViewer{
         passengerPanel.setLayout(new BorderLayout());
         displayPanel = new JPanel();
         displayPanel.setLayout(new BorderLayout());
-        displayPanel.setPreferredSize(new Dimension(900, MainPageViewer.HEIGHT));
+        displayPanel.setPreferredSize(new Dimension(880, MainPageViewer.HEIGHT));
         buttonPanel = new JPanel();
-        buttonPanel.setPreferredSize(new Dimension(100, MainPageViewer.HEIGHT));
-        buttonPanel.setLayout(new GridLayout(4, 1));
+        buttonPanel.setPreferredSize(new Dimension(120, MainPageViewer.HEIGHT));
+        buttonPanel.setLayout(new GridLayout(5, 1));
 
 
         addButtonToPanel();
@@ -52,34 +51,38 @@ public class PassengerViewer extends SubViewer{
         backPanel.add(exit);
         back.addActionListener(new BackListener());
 
-        JPanel titlePanel = new JPanel();
-        JLabel title = new JLabel("Passenger");
+        //JPanel titlePanel = new JPanel();
+        JLabel title = new JLabel(" Passenger "+id);
         title.setFont(title.getFont().deriveFont(20f));
-        titlePanel.add(title);
+        //titlePanel.add(title);
 
         passengerPanel.add(buttonPanel, BorderLayout.WEST);
         passengerPanel.add(displayPanel, BorderLayout.CENTER);
         passengerPanel.add(backPanel, BorderLayout.SOUTH);
-        passengerPanel.add(titlePanel, BorderLayout.NORTH);
+        passengerPanel.add(title, BorderLayout.NORTH);
     }
 
     private void addButtonToPanel(){
         String[] nameList = {"<html>VIP<br />lounge?</html>", "<html>Foreign<br />exchange</html>",
-                "<html>Favourite<br />restaurant<br />location</html>", "<html>Ate<br />here?</html>"};
+                "<html>Favourite<br />restaurant<br />location</html>", "<html>Ate<br />here?</html>",
+                "<html>Information</html>"};
         for(int i = 0; i < nameList.length; i++){
             ActionListener actionListener;
             switch (i){
                 case 0:
-                    actionListener = new ButtonListener("Lounge available for flight? ", "Passenger ID: ", Flag.INTEGER);
+                    actionListener = new ButtonListener("Lounge available for flight? ", "Passenger ID: ", Flag.INTEGER, MethodFlag.LOUNGE);
                     break;
                 case 1:
-                    actionListener = new ButtonListener("Non-english service at terminal for foreign exchange? ", "Passenger ID: ", Flag.INTEGER);
+                    actionListener = new ButtonListener("Non-english service at terminal for foreign exchange? ", "Passenger ID: ", Flag.INTEGER, MethodFlag.NONENGSERVICE);
                     break;
                 case 2:
-                    actionListener = new ButtonListener("Find the location of your favorite restaurant? ", "Restaurant name: ", Flag.CHAR);
+                    actionListener = new ButtonListener("Find the location of your favorite restaurant? ", "Restaurant name: ", Flag.CHAR, MethodFlag.RESTAURANT);
+                    break;
+                case 3:
+                    actionListener = new ButtonListener("Find out ratings of whre you ate at? ", "Passenger ID: ", Flag.INTEGER, MethodFlag.RATING);
                     break;
                 default:
-                    actionListener = new ButtonListener("Find out ratings of whre you ate at? ", "Passenger ID: ", Flag.INTEGER);
+                    actionListener = new InformationListener();
                     break;
             }
             JButton button = new JButton(nameList[i]);
@@ -89,7 +92,7 @@ public class PassengerViewer extends SubViewer{
         }
     }
 
-    private void addPanel(String text, String label, Flag f){
+    private void addPanel(String text, String label, Flag f, MethodFlag mf){
 
         JPanel mainPanel = new JPanel();
         mainPanel.setPreferredSize(new Dimension(800, 70));
@@ -104,9 +107,9 @@ public class PassengerViewer extends SubViewer{
 
         JTextField[] tArr = {answer};
         Flag[] fArr = {f};
-        answer.addActionListener(new EnterListener(tArr, fArr));
+        answer.addActionListener(new EnterListener(tArr, fArr, mf));
         JButton submit = new JButton("Submit");
-        submit.addActionListener(new EnterListener(tArr, fArr));
+        submit.addActionListener(new EnterListener(tArr, fArr, mf));
 
         subPanel.add(question);
         subPanel.add(answer);
@@ -119,29 +122,42 @@ public class PassengerViewer extends SubViewer{
         oldPanel = mainPanel;
 
         //JTextArea area = new JTextArea();
-        scrollPane.setViewportView(createTable());
-        displayPanel.add(scrollPane, BorderLayout.CENTER);
+//        scrollPane.setViewportView(createTable());
+//        displayPanel.add(scrollPane, BorderLayout.CENTER);
     }
 
     class ButtonListener implements ActionListener{
         String text;
         String label;
         Flag f;
-        private ButtonListener(String text, String label, Flag f){
+        MethodFlag mf;
+        private ButtonListener(String text, String label, Flag f, MethodFlag mf){
             this.text = text;
             this.label = label;
             this.f = f;
+            this.mf = mf;
         }
 
         @Override
         public void actionPerformed(ActionEvent e) {
             removePanels();
-            addPanel(text, label, f);
+            addPanel(text, label, f, mf);
             frame.revalidate();
         }
     }
 
-    private JTable createTable(){
+    class InformationListener implements ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            removePanels();
+            //oldPanel = null;
+            scrollPane.setViewportView(createTable(0, null));
+            displayPanel.add(scrollPane, BorderLayout.CENTER);
+            frame.revalidate();
+        }
+    }
+
+    private JTable createTable(int pid, String restaurant){
         String[] columnNames = {"First Name",
                 "Last Name",
                 "Sport",

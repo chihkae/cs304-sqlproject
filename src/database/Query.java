@@ -154,14 +154,48 @@ public class Query {
 
     public static ResultSet vipLoungAvailable(int p_id) throws SQLException {
         String booleanString =
-                "Select vip_lounge" +
-                        "from terminals t, passengers p, departure_flight df, arrival_flght af" +
-                        "where p.id= ? ,p.flight_date=df.departure_date, p.flight_number= df.flight_number" +
-                        "p.flight_date=af.arrival_date, p.flight_number=af.flight_number" +
-                        "df.terminal_number= t.terminal_number, af.terminal_number=t.terminal_number";
+                "select distinct vip_lounge " +
+                        "from (select distinct flight_number, terminal_number " +
+                        "from arrival_flight " +
+                        "union all " +
+                        "select distinct flight_number, terminal_number " +
+                        "from departure_flight) u, passenger p, terminals t " +
+                        "where p.id = ? " +
+                        "and (p.flight_number = u.flight_number " +
+                        "or p.flight_number = u.flight_number) " +
+                        "and u.terminal_number = t.terminal_number";
         PreparedStatement booleanStatement = getPreparedStatement(booleanString);
         booleanStatement.setInt(1, p_id);
-        ResultSet rs = booleanStatement.executeQuery(booleanString);
+        ResultSet rs = booleanStatement.executeQuery();
+        ResultSetMetaData rsmd = rs.getMetaData();
+
+        // get number of columns
+        int numCols = rsmd.getColumnCount();
+
+        System.out.println(" ");
+
+        // display column names;
+        for (int i = 0; i < numCols; i++) {
+            // get column name and print it
+
+            System.out.printf("%-15s", rsmd.getColumnName(i + 1));
+        }
+
+        System.out.println(" ");
+
+        while (rs.next()) {
+            // for display purposes get everything from Oracle
+            // as a string
+
+            // simplified output formatting; truncation may occur
+
+            Boolean vip_Lounge = rs.getBoolean("vip_lounge");
+            if (vip_Lounge == true) {
+                System.out.println("VIP lounge is available for your trip at the terminal!");
+            } else {
+                System.out.printf("Sorry there is currently no lounge available at your terminal!");
+            }
+        }
         return rs;
     }
 

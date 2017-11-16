@@ -121,41 +121,41 @@ create table customer_service
 
 #grant select on customer_service to public;
 
-load data local infile '/Users/Stanley/Documents/CS304/cs304-project/sql/terminals.txt ' into table terminals
+load data local infile '/Users/songyihang/Documents/Courses/CPSC304/cs304-project/sql/terminals.txt ' into table terminals
 fields terminated by '\t';
 
-load data local infile '/Users/Stanley/Documents/CS304/cs304-project/sql/baggage_carousel.txt ' into table baggage_carousel
+load data local infile '/Users/songyihang/Documents/Courses/CPSC304/cs304-project/sql/baggage_carousel.txt ' into table baggage_carousel
 fields terminated by '\t';
 
-load data local infile '/Users/Stanley/Documents/CS304/cs304-project/sql/General_Service.txt ' into table general_service
+load data local infile '/Users/songyihang/Documents/Courses/CPSC304/cs304-project/sql/General_Service.txt ' into table general_service
 fields terminated by '\t';
 
-load data local infile '/Users/Stanley/Documents/CS304/cs304-project/sql/gates.txt ' into table gates
+load data local infile '/Users/songyihang/Documents/Courses/CPSC304/cs304-project/sql/gates.txt ' into table gates
 fields terminated by '\t';
 
-load data local infile '/Users/Stanley/Documents/CS304/cs304-project/sql/airlines.txt ' into table airlines
+load data local infile '/Users/songyihang/Documents/Courses/CPSC304/cs304-project/sql/airlines.txt ' into table airlines
 fields terminated by '\t';
 
-load data local infile '/Users/Stanley/Documents/CS304/cs304-project/sql/arrivals.txt ' into table arrival_flight
+load data local infile '/Users/songyihang/Documents/Courses/CPSC304/cs304-project/sql/arrivals.txt ' into table arrival_flight
 fields terminated by '\t';
 
-load data local infile '/Users/Stanley/Documents/CS304/cs304-project/sql/departure.txt ' into table departure_flight
+load data local infile '/Users/songyihang/Documents/Courses/CPSC304/cs304-project/sql/departure.txt ' into table departure_flight
 fields terminated by '\t';
 
-load data local infile '/Users/Stanley/Documents/CS304/cs304-project/sql/passenger.txt ' into table passenger
+load data local infile '/Users/songyihang/Documents/Courses/CPSC304/cs304-project/sql/passenger.txt ' into table passenger
 fields terminated by '\t';
 
-load data local infile '/Users/Stanley/Documents/CS304/cs304-project/sql/baggage.txt ' into table baggage
+load data local infile '/Users/songyihang/Documents/Courses/CPSC304/cs304-project/sql/baggage.txt ' into table baggage
 fields terminated by '\t';
 
-load data local infile '/Users/Stanley/Documents/CS304/cs304-project/sql/uses.txt ' into table uses
+load data local infile '/Users/songyihang/Documents/Courses/CPSC304/cs304-project/sql/uses.txt ' into table uses
 fields terminated by '\t';
 
-load data local infile '/Users/Stanley/Documents/CS304/cs304-project/sql/restaurants.txt ' into table restaurant
+load data local infile '/Users/songyihang/Documents/Courses/CPSC304/cs304-project/sql/restaurants.txt ' into table restaurant
 fields terminated by '\t';
 
-load data local infile '/Users/Stanley/Documents/CS304/cs304-project/sql/shops.txt ' into table shop
+load data local infile '/Users/songyihang/Documents/Courses/CPSC304/cs304-project/sql/shops.txt ' into table shop
 fields terminated by '\t';
 
-load data local infile '/Users/Stanley/Documents/CS304/cs304-project/sql/customer_service.txt ' into table customer_service
+load data local infile '/Users/songyihang/Documents/Courses/CPSC304/cs304-project/sql/customer_service.txt ' into table customer_service
 fields terminated by '\t';

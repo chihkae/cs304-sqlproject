@@ -8,7 +8,6 @@ import java.awt.event.ActionEvent;
 public class EmployeeViewer extends SubViewer {
     private JPanel employeePanel;
     private JPanel buttonPanel;
-    //private String test;
 
     private static EmployeeViewer instance;
 
@@ -27,10 +26,9 @@ public class EmployeeViewer extends SubViewer {
     }
 
     private void createPanel(){
-        employeePanel = new JPanel();
-        employeePanel.setLayout(new BorderLayout());
+        employeePanel = new JPanel(new BorderLayout());
         buttonPanel = new JPanel();
-        buttonPanel.setPreferredSize(new Dimension(100, MainPageViewer.HEIGHT));
+        buttonPanel.setPreferredSize(new Dimension(120, MainPageViewer.HEIGHT));
         buttonPanel.setLayout(new GridLayout(7, 1));
 
 
@@ -46,15 +44,15 @@ public class EmployeeViewer extends SubViewer {
         backPanel.add(exit);
         back.addActionListener(new BackListener());
 
-        JPanel titlePanel = new JPanel();
-        JLabel title = new JLabel("Employee");
+        //JPanel titlePanel = new JPanel();
+        JLabel title = new JLabel(" Employee");
         title.setFont(title.getFont().deriveFont(20f));
-        titlePanel.add(title);
+        //titlePanel.add(title);
 
         employeePanel.add(buttonPanel, BorderLayout.WEST);
         employeePanel.add(displayPanel, BorderLayout.CENTER);
         employeePanel.add(backPanel, BorderLayout.SOUTH);
-        employeePanel.add(titlePanel, BorderLayout.NORTH);
+        employeePanel.add(title, BorderLayout.NORTH);
 
     }
 
@@ -104,8 +102,8 @@ public class EmployeeViewer extends SubViewer {
         Flag[] fArr = {Flag.INTEGER};
 
         // data can be enter in two ways: either hit Enter or press button
-        searchText.addActionListener(new EnterListener(tArr, fArr));
-        submit.addActionListener(new EnterListener(tArr, fArr));
+        searchText.addActionListener(new EnterListener(tArr, fArr, MethodFlag.FINDLOSTBAGGAGE));
+        submit.addActionListener(new EnterListener(tArr, fArr, MethodFlag.FINDLOSTBAGGAGE));
         searchPanel.add(searchName);
         searchPanel.add(searchText);
         searchPanel.add(submit);
@@ -148,7 +146,7 @@ public class EmployeeViewer extends SubViewer {
         JTextField[] tArr = {flightNumT, departureT, nameT, phoneT, addressT};
         Flag[] fArr = {Flag.CHAR, Flag.DATE, Flag.CHAR, Flag.CHAR, Flag.CHAR};
         JButton submit = new JButton("Submit");
-        submit.addActionListener(new EnterListener(tArr, fArr));
+        submit.addActionListener(new EnterListener(tArr, fArr, MethodFlag.ADDNEWPASSENGER));
 
         subPanel1.add(flightNum);
         subPanel1.add(flightNumT);
@@ -193,7 +191,7 @@ public class EmployeeViewer extends SubViewer {
         JTextField[] tArr = {searchText, newAirlineT};
         Flag[] fArr = {Flag.INTEGER, Flag.CHAR};
         JButton submit = new JButton("Submit");
-        submit.addActionListener(new EnterListener(tArr, fArr));
+        submit.addActionListener(new EnterListener(tArr, fArr, MethodFlag.CHANGEAIRINE));
 
         searchPanel.add(searchName);
         searchPanel.add(searchText);
@@ -221,7 +219,7 @@ public class EmployeeViewer extends SubViewer {
         JTextField[] tArr = {searchText, arrivalDateT, newTimeT};
         Flag[] fArr = {Flag.CHAR, Flag.DATE, Flag.TIME};
         JButton submit = new JButton("Submit");
-        submit.addActionListener(new EnterListener(tArr, fArr));
+        submit.addActionListener(new EnterListener(tArr, fArr, MethodFlag.UPDATEARRIVAL));
 
         searchPanel.add(searchName);
         searchPanel.add(searchText);
@@ -249,8 +247,8 @@ public class EmployeeViewer extends SubViewer {
         Flag[] fArr = {Flag.INTEGER};
 
         // data can be enter in two ways: either hit Enter or press button
-        searchText.addActionListener(new EnterListener(tArr, fArr));
-        submit.addActionListener(new EnterListener(tArr, fArr));
+        searchText.addActionListener(new EnterListener(tArr, fArr, MethodFlag.REMOVEPASSENGER));
+        submit.addActionListener(new EnterListener(tArr, fArr, MethodFlag.REMOVEPASSENGER));
 
         searchPanel.add(searchName);
         searchPanel.add(searchText);
@@ -276,7 +274,7 @@ public class EmployeeViewer extends SubViewer {
         JTextField[] tArr = {searchText, arrivalDateT, newTimeT};
         Flag[] fArr = {Flag.CHAR, Flag.DATE, Flag.TIME};
         JButton submit = new JButton("Submit");
-        submit.addActionListener(new EnterListener(tArr, fArr));
+        submit.addActionListener(new EnterListener(tArr, fArr, MethodFlag.UPDATEDEPARTURE));
 
         searchPanel.add(searchName);
         searchPanel.add(searchText);

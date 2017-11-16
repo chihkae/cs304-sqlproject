@@ -1,15 +1,24 @@
 package gui;
 
+import database.Query;
+import database.QueryResult;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class SubViewer {
     protected JFrame frame;
     protected JPanel oldPanel;
     protected JScrollPane scrollPane;
     protected JPanel displayPanel;
+    protected Object[][] resultSet;
+    protected int successInt;
+    //private static final String PATH = "doge.png";
     public SubViewer()
     {
         frame = new JFrame();
@@ -50,6 +59,7 @@ public class SubViewer {
 
     class EnterListener implements ActionListener{
         JTextField[] tArr;
+        //Object o;
 
         /**
          * checkFLag:
@@ -59,9 +69,14 @@ public class SubViewer {
          * 3: time
          */
         Flag[] fArr;
-        public EnterListener(JTextField[] tArr, Flag[] fArr){
+        MethodFlag mf;
+        ArrayList<Integer> resultIntegers = new ArrayList<>();
+        ArrayList<String> resultStrings = new ArrayList<>();
+        //Query q = new Query();
+        public EnterListener(JTextField[] tArr, Flag[] fArr, MethodFlag mf){
             this.fArr = fArr;
             this.tArr = tArr;
+            this.mf = mf;
         }
 
         @Override
@@ -73,17 +88,51 @@ public class SubViewer {
                         break;
                     case INTEGER:
                         int c = checkInteger(str);
+                        resultIntegers.add(c);
                         //System.out.println(c);
                         break;
                     case DATE:
                         String d = checkDate(str);
+                        resultStrings.add(d);
                         //System.out.println(d);
                         break;
                     case TIME:
                         String t = checkTime(str);
+                        resultStrings.add(t);
                         //System.out.println(t);
                         break;
                 }
+            }
+
+            switch (mf){
+                case LOUNGE:
+                    //System.out.println("get");
+                    getVIPLounge(resultIntegers.get(0));
+                    break;
+                case FINDLOSTBAGGAGE:
+                case REMOVEPASSENGER:
+                case RATING:
+                case RESTAURANT:
+                case CHANGEAIRINE:
+                case NONENGSERVICE:
+                case UPDATEARRIVAL:
+                case ADDNEWPASSENGER:
+                case UPDATEDEPARTURE:
+            }
+        }
+
+        private void getVIPLounge(int pid){
+            try {
+                resultSet = QueryResult.parseResultSet(Query.vipLoungAvailable(pid));
+                //System.out.println(resultSet.length);
+                //System.out.println(resultSet[0][0]);
+                scrollPane.setViewportView(new JTable(copyArray(resultSet), resultSet[0]));
+                displayPanel.add(scrollPane, BorderLayout.CENTER);
+                frame.revalidate();
+                //        scrollPane.setViewportView(createTable());
+//        displayPanel.add(scrollPane, BorderLayout.CENTER);
+            } catch (SQLException e) {
+                System.out.println(e);
             }
         }
 
@@ -172,6 +221,9 @@ public class SubViewer {
     }
 
     private void popOutWindow(String message, String error) {
+//        ImageIcon icon = new ImageIcon(PATH);
+//        Image image = icon.getImage();
+//        Image scaled = image.getScaledInstance(80,80, java.awt.Image.SCALE_SMOOTH);
         JOptionPane.showMessageDialog(null, message, error, JOptionPane.ERROR_MESSAGE);
     }
 
@@ -188,5 +240,13 @@ public class SubViewer {
         public void actionPerformed(ActionEvent e) {
             System.exit(0);
         }
+    }
+
+    private Object[][] copyArray(Object[][] o){
+        Object[][] subcopy = new Object[o.length][o[0].length];
+        for(int i = 1; i < o.length; i++){
+           subcopy[i] = o[i];
+        }
+        return subcopy;
     }
 }

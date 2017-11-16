@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.util.ArrayList;
 
 public class ComboBoxPanel implements ItemListener {
     private JPanel panel;
@@ -45,10 +44,6 @@ public class ComboBoxPanel implements ItemListener {
 
         passengerPanel.add(getID);
         passengerPanel.add(loginForPassenger);
-
-        //String s = getID.getText();
-//        loginForPassenger.addActionListener(new PassengerEnterListener(s));
-//        getID.addActionListener(new PassengerEnterListener(s));
 
         card.add(passengerPanel, PASSENGER);
         card.add(employeePanel, EMPLOYEE);
