@@ -7,8 +7,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class SubViewer {
@@ -72,6 +75,8 @@ public class SubViewer {
         MethodFlag mf;
         ArrayList<Integer> resultIntegers;
         ArrayList<String> resultStrings;
+        java.sql.Date d;
+        java.sql.Time t;
         //Query q = new Query();
         public EnterListener(JTextField[] tArr, Flag[] fArr, MethodFlag mf){
             this.fArr = fArr;
@@ -95,13 +100,11 @@ public class SubViewer {
                         //System.out.println(c);
                         break;
                     case DATE:
-                        String d = checkDate(str);
-                        resultStrings.add(d);
+                        d = checkDate(str);
                         //System.out.println(d);
                         break;
                     case TIME:
-                        String t = checkTime(str);
-                        resultStrings.add(t);
+                        t = checkTime(str);
                         //System.out.println(t);
                         break;
                 }
@@ -130,6 +133,8 @@ public class SubViewer {
                     getNonEnglishService(resultIntegers.get(0));
                     break;
                 case UPDATEARRIVAL:
+                    updateArrival(resultStrings.get(0), d, t);
+                    break;
                 case ADDNEWPASSENGER:
                 case UPDATEDEPARTURE:
             }
@@ -157,6 +162,23 @@ public class SubViewer {
             } catch (SQLException e) {
                 System.out.println(e);
                 //popOutWindow(e.getMessage(), "Error Code 119");
+            }
+        }
+
+        private void updateArrival(String flightNumber, Date arrivalDate,
+                                   Time newArrivalTime){
+            try {
+                int i = Query.updateArrivalFlightTime(flightNumber, arrivalDate, newArrivalTime);
+                System.out.println(i);
+                if(i != 0){
+                    scrollPane.setViewportView(new JTextArea("Arrival flight is successfully updated!"));
+                }else{
+                    scrollPane.setViewportView(new JTextArea("Arrival flight not found!"));
+                }
+                displayPanel.add(scrollPane, BorderLayout.CENTER);
+                frame.revalidate();
+            } catch (SQLException e) {
+                popOutWindow(e.getMessage(), "Error Code 123");
             }
         }
 
@@ -213,7 +235,7 @@ public class SubViewer {
             }
         }
 
-        private String checkDate(String s){
+        private java.sql.Date checkDate(String s){
             try{
                 String[] dateParts = s.split("\\-");
                 if(dateParts.length != 3){
@@ -228,8 +250,9 @@ public class SubViewer {
                         int day = Integer.parseInt(dateWithSlash[2]);
                         if(year > 0 && month >= 1 && month <= 12 &&
                                 day > 0 && day <= 31){
-                            popOutWindow("Please input valid date!", "Error Code 103");
-                            return s;
+                            //popOutWindow("Please input valid date!", "Error Code 103");
+                            java.util.Date date = new SimpleDateFormat("yyyy/mm/dd").parse(s);
+                            return new java.sql.Date(date.getTime());
                         }
                     }catch(Exception exception){
                         popOutWindow("Please input valid date!", "Error Code 104");
@@ -243,17 +266,18 @@ public class SubViewer {
                 int day = Integer.parseInt(dateParts[2]);
                 if(year > 0 && month >= 1 && month <= 12 &&
                         day > 0 && day <= 31){
-                    return s;
+                    java.util.Date date = new SimpleDateFormat("yyyy-mm-dd").parse(s);
+                    return new java.sql.Date(date.getTime());
                 }
             }catch(Exception e){
-                popOutWindow("Please input valid date!", "Error Code 106");
+                popOutWindow(e.getMessage(), "Error Code 106");
                 return null;
             }
             popOutWindow("Please input valid date!", "Error Code 107");
             return null;
         }
 
-        private String checkTime(String s){
+        private java.sql.Time checkTime(String s){
             try{
                 String[] timeParts = s.split("\\:");
                 if(timeParts.length != 3){
@@ -264,8 +288,10 @@ public class SubViewer {
                     int hourTwo = Integer.parseInt(timeParts[0]);
                     int minuteTwo = Integer.parseInt(timeParts[1]);
                     if(hourTwo >= 0 && hourTwo <= 24 &&
-                            minuteTwo >= 0 && minuteTwo <= 59)
-                        return s;
+                            minuteTwo >= 0 && minuteTwo <= 59){
+                        java.util.Date date = new SimpleDateFormat("hh:mm").parse(s);
+                        return new java.sql.Time(date.getTime());
+                    }
                     else{
                         popOutWindow("Please input valid time!","Error Code 109");
                         return null;
@@ -276,10 +302,12 @@ public class SubViewer {
                 int second = Integer.parseInt(timeParts[2]);
                 if(hour >= 0 && hour <= 24 &&
                         minute >= 0 && minute <= 59 &&
-                        second >= 0 && second <= 59)
-                    return s;
+                        second >= 0 && second <= 59){
+                    java.util.Date date = new SimpleDateFormat("hh:mm:ss").parse(s);
+                    return new java.sql.Time(date.getTime());
+                }
             }catch (Exception e){
-                popOutWindow("Please input valid time!","Error Code 110");
+                popOutWindow(e.getMessage(),"Error Code 110");
                 return null;
             }
             popOutWindow("Please input valid time!","Error Code 111");
