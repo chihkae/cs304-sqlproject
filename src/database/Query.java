@@ -272,6 +272,7 @@ public class Query {
     }
 
     public static ResultSet showView(int passengerId) throws SQLException {
+        createView(passengerId);
         String showViewString = "Select * from v?";
         PreparedStatement showStatement = getPreparedStatement(showViewString);
         showStatement.setInt(1, passengerId);

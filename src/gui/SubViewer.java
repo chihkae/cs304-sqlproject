@@ -165,16 +165,10 @@ public class SubViewer {
             }
         }
 
-        private void updateArrival(String flightNumber, Date arrivalDate,
-                                   Time newArrivalTime){
+        private void updateArrival(String flightNumber, java.sql.Date arrivalDate,
+                                   java.sql.Time newArrivalTime){
             try {
-                int i = Query.updateArrivalFlightTime(flightNumber, arrivalDate, newArrivalTime);
-                System.out.println(i);
-                if(i != 0){
-                    scrollPane.setViewportView(new JTextArea("Arrival flight is successfully updated!"));
-                }else{
-                    scrollPane.setViewportView(new JTextArea("Arrival flight not found!"));
-                }
+                scrollPane.setViewportView(new JTextArea(Query.updateArrivalFlightTime(flightNumber, arrivalDate, newArrivalTime)));
                 displayPanel.add(scrollPane, BorderLayout.CENTER);
                 frame.revalidate();
             } catch (SQLException e) {

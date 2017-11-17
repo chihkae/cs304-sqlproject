@@ -166,12 +166,8 @@ public class PassengerViewer extends SubViewer{
             removePanels();
             //oldPanel = null;
             try {
-                if(Query.createView(id) == 1){
-                    resultSet = QueryResult.parseResultSet(Query.showView(id));
-                    scrollPane.setViewportView(new JTable(copyArray(resultSet), resultSet[0]));
-                }else{
-                    scrollPane.setViewportView(new JTextArea("Passenger does not exist."));
-                }
+                resultSet = QueryResult.parseResultSet(Query.showView(id));
+                scrollPane.setViewportView(new JTable(copyArray(resultSet), resultSet[0]));
                 displayPanel.add(scrollPane, BorderLayout.CENTER);
                 frame.revalidate();
             } catch (SQLException e1) {
