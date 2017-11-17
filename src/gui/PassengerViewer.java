@@ -166,7 +166,7 @@ public class PassengerViewer extends SubViewer{
             removePanels();
             //oldPanel = null;
             try {
-                if(Query.myInformationView(id) == 1){
+                if(Query.createView(id) == 1){
                     resultSet = QueryResult.parseResultSet(Query.showView(id));
                     scrollPane.setViewportView(new JTable(copyArray(resultSet), resultSet[0]));
                 }else{

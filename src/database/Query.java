@@ -187,40 +187,16 @@ public class Query {
         booleanStatement.setInt(1, p_id);
         ResultSet rs= booleanStatement.executeQuery();
         rs.next();
-        try{
+        try {
             Boolean vip_Lounge = rs.getBoolean("vip_lounge");
             if (vip_Lounge) {
                 return "VIP lounge is available for your trip at the terminal!";
             } else {
                 return "Sorry there is currently no lounge available at your terminal!";
             }
-        }catch(SQLException e){
+        } catch(SQLException e){
             return "Sorry there is currently no lounge available at your terminal!";
         }
-            /*
-            ResultSetMetaData rsmd = rs.getMetaData();
-            // get number of columns
-            int numCols = rsmd.getColumnCount();
-            System.out.println(" ");
-            // display column names;
-            for (int i = 0; i < numCols; i++) {
-                // get column name and print it
-                System.out.printf("%-15s", rsmd.getColumnName(i + 1));
-            }
-            System.out.println(" ");
-            while (rs.next()) {
-                // for display purposes get everything from Oracle
-                // as a string
-                // simplified output formatting; truncation may occur
-                Boolean vip_Lounge = rs.getBoolean("vip_lounge");
-                if (vip_Lounge == true) {
-                    System.out.println("VIP lounge is available for your trip at the terminal!");
-                } else {
-                    System.out.printf("Sorry there is currently no lounge available at your terminal!");
-                }
-            }
-            */
-
     }
 
 
@@ -239,14 +215,14 @@ public class Query {
         booleanStatement.setInt(1, p_id);
         ResultSet rs= booleanStatement.executeQuery();
 
-        try{
+        try {
             Boolean non_english_service = rs.getBoolean("non_english_service");
             if (non_english_service) {
                 return "Yes! Non english service will be provided at the currency exchange";
             } else {
                 return "Sorry only english service is provided at the currency exchange";
             }
-        }catch(SQLException e){
+        } catch(SQLException e){
             return "Sorry only english service is provided at the currency exchange";
         }
 
@@ -280,20 +256,22 @@ public class Query {
         return selectStatement.executeQuery();
 
     }
-    public static int myInformationView(int p_id) throws SQLException{
-        String selectView=
-                "Create view ? "+
+
+    public static int createView(int passengerId) throws SQLException {
+        String selectViewString =
+                "Create or replace view v? "+
                         "as select * "+
                         "from passenger where id=?";
-        PreparedStatement createViewStatement= getPreparedStatement(selectView);
-        createViewStatement.setInt(1, p_id);
-        createViewStatement.setInt(2,p_id);
+        PreparedStatement createViewStatement= getPreparedStatement(selectViewString);
+        createViewStatement.setInt(1, passengerId);
+        createViewStatement.setInt(2, passengerId);
         return createViewStatement.executeUpdate();
     }
-    public static ResultSet showView(int p_id)throws SQLException{
-        String showView= "Select * from ?";
-        PreparedStatement showStatement = getPreparedStatement(showView);
-        showStatement.setInt(1,p_id);
+
+    public static ResultSet showView(int passengerId) throws SQLException {
+        String showViewString = "Select * from v?";
+        PreparedStatement showStatement = getPreparedStatement(showViewString);
+        showStatement.setInt(1, passengerId);
         return showStatement.executeQuery();
     }
 
