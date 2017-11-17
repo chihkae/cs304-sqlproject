@@ -14,8 +14,10 @@ public class QueryResult {
         List<List<Object>> listResult = new ArrayList<>();
 
         addColumnNamesToListResult(listResult, resultSetMetaData, numCols);
+        // iterate over rows in the ResultSet and add it to the ListResult
         addResultSetRowsToListResult(listResult, rs, numCols);
 
+        // convert List<List<Object>> to Object[][]
         Object[][] arrayResult = listResult.stream().map(List::toArray).toArray(Object[][]::new);
         return arrayResult;
     }
@@ -27,6 +29,7 @@ public class QueryResult {
 
         for (int x = 1; x <= numCols; x++) {
             // System.out.println(resultSetMetaData.getColumnName(x));
+            // Add the column names to the columnNames list
             columnNames.add(resultSetMetaData.getColumnName(x));
         }
 
@@ -35,7 +38,9 @@ public class QueryResult {
 
     public static void addResultSetRowsToListResult(List<List<Object>> listResult,
                                                     ResultSet rs, int numCols) throws SQLException {
+        // Iterate over result set
         while (rs.next()) {
+            // Get the current row values and add it to the listResult
             List<Object> row = getRowValues(rs, numCols);
             listResult.add(row);
         }
@@ -44,7 +49,10 @@ public class QueryResult {
     public static List<Object> getRowValues(ResultSet rs, int numCols) throws SQLException {
         List<Object> listOfRowValues = new ArrayList<>();
 
+        // Iterate over each column in the row
         for (int y = 1; y <= numCols; y++) {
+            // Get the string value of the column data.
+            // getString() converts the data to a string. Ex. Date -> String and Integer -> String
             listOfRowValues.add(rs.getString(y));
         }
 

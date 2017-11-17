@@ -17,7 +17,7 @@ public class Query {
      */
 
     public static int addNewPassenger(int passengerId, String departureFlightNumber, Date departureFlightDate,
-                                         String passengerName, int phoneNumber, String address)
+                                         String passengerName, String phoneNumber, String address)
             throws SQLException {
         String insertString =
                 "insert into passenger values(?, ?, ?, ?, ?, ?, ?, ?)";
@@ -30,7 +30,7 @@ public class Query {
         insertStatement.setString(4, null);
         insertStatement.setDate(5, null);
         insertStatement.setString(6, passengerName);
-        insertStatement.setInt(7, phoneNumber);
+        insertStatement.setString(7, phoneNumber);
         insertStatement.setString(8, address);
 
         return insertStatement.executeUpdate();
@@ -79,7 +79,8 @@ public class Query {
 
     public static ResultSet findLostBaggage(int baggageId) throws SQLException {
         String selectString =
-                "select terminal_number, carousel_number, baggage_number, passenger_id, name, phone_number, address from baggage b, passenger p " +
+                "select terminal_number, carousel_number, baggage_number, passenger_id, name, phone_number, address " +
+                        "from baggage b, passenger p " +
                         "where b.passenger_id = p.id " +
                         "and b.baggage_number = ?";
         PreparedStatement selectStatement = getPreparedStatement(selectString);
@@ -108,7 +109,7 @@ public class Query {
     public static ResultSet showPassengersCountOnEachDepartureFlight() throws SQLException {
         // only applies to departure flight
         String selectString =
-                "select df.flight_number, .df.departure_date, COUNT(*) " +
+                "select df.flight_number, df.departure_date, COUNT(*) " +
                         "from passenger p, departure_flight df " +
                         "where p.departure_flight_number = df.flight_number "+
                         "and p.departure_date = df.departure_date "+
