@@ -1,7 +1,5 @@
 package database;
-import database.DbConnection;
 
-import javax.xml.transform.Result;
 import java.sql.*;
 
 public class Query {
@@ -16,7 +14,7 @@ public class Query {
      * Employees
      */
 
-    public static int addNewPassenger(int passengerId, String departureFlightNumber, Date departureFlightDate,
+    public static String addNewPassenger(int passengerId, String departureFlightNumber, Date departureFlightDate,
                                          String passengerName, String phoneNumber, String address)
             throws SQLException {
         String insertString =
@@ -33,7 +31,8 @@ public class Query {
         insertStatement.setString(7, phoneNumber);
         insertStatement.setString(8, address);
 
-        return insertStatement.executeUpdate();
+        int queryResultRowCount = insertStatement.executeUpdate();
+        return showQueryUpdateMessage(queryResultRowCount);
 
     }
     public static ResultSet showPassengers() throws SQLException{
@@ -44,7 +43,7 @@ public class Query {
         return selectStatement.executeQuery();
     }
 
-    public static int changeAirline(int passengerId, String newAirlineName) throws SQLException {
+    public static String changeAirline(int passengerId, String newAirlineName) throws SQLException {
         // only applies to departure.
         // It should change the flight and try to find a flight
         // that has the same destination + same date + different airline.
@@ -73,8 +72,8 @@ public class Query {
         updateStatement.setInt(2, passengerId);
         updateStatement.setInt(2, passengerId);
 
-
-        return updateStatement.executeUpdate();
+        int queryResultRowCount = updateStatement.executeUpdate();
+        return showQueryUpdateMessage(queryResultRowCount);
     }
 
     public static ResultSet findLostBaggage(int baggageId) throws SQLException {
@@ -89,14 +88,16 @@ public class Query {
         return selectStatement.executeQuery();
     }
 
-    public static int removePassenger(int passengerID) throws SQLException {
+    public static String removePassenger(int passengerID) throws SQLException {
         String deleteString =
                 "delete from passenger " +
                         "where passenger.id = ?";
 
         PreparedStatement deleteStatement = getPreparedStatement(deleteString);
         deleteStatement.setInt(1, passengerID);
-        return deleteStatement.executeUpdate();
+
+        int queryResultRowCount = deleteStatement.executeUpdate();
+        return showQueryUpdateMessage(queryResultRowCount);
     }
 
     public static ResultSet showAllPassengers() throws SQLException {
@@ -119,7 +120,7 @@ public class Query {
         return selectStatement.executeQuery();
     }
 
-    public static int updateArrivalFlightTime(String flightNumber, Date arrivalDate,
+    public static String updateArrivalFlightTime(String flightNumber, Date arrivalDate,
                                               Time newArrivalTime) throws SQLException {
         String updateString =
                 "update arrival_flight " +
@@ -132,7 +133,8 @@ public class Query {
         updateStatement.setString(2, flightNumber);
         updateStatement.setDate(3, arrivalDate);
 
-        return updateStatement.executeUpdate();
+        int queryResultRowCount = updateStatement.executeUpdate();
+        return showQueryUpdateMessage(queryResultRowCount);
     }
 
     public static ResultSet showAllArrivalFlights() throws SQLException {
@@ -142,7 +144,7 @@ public class Query {
         return selectStatement.executeQuery();
     }
 
-    public static int updateDepartureFlightTime(String flightNumber, Date departureDate,
+    public static String updateDepartureFlightTime(String flightNumber, Date departureDate,
                                                 Time newDepartureTime) throws SQLException {
 
         String updateString =
@@ -156,7 +158,8 @@ public class Query {
         updateStatement.setString(2, flightNumber);
         updateStatement.setDate(3, departureDate);
 
-        return updateStatement.executeUpdate();
+        int queryResultRowCount = updateStatement.executeUpdate();
+        return showQueryUpdateMessage(queryResultRowCount);
     }
 
     public static ResultSet showAllDepartureFlights() throws SQLException {
@@ -254,10 +257,9 @@ public class Query {
                         "from restaurant";
         PreparedStatement selectStatement = getPreparedStatement(selectString);
         return selectStatement.executeQuery();
-
     }
 
-    public static int createView(int passengerId) throws SQLException {
+    public static String createView(int passengerId) throws SQLException {
         String selectViewString =
                 "Create or replace view v? "+
                         "as select * "+
@@ -265,7 +267,8 @@ public class Query {
         PreparedStatement createViewStatement= getPreparedStatement(selectViewString);
         createViewStatement.setInt(1, passengerId);
         createViewStatement.setInt(2, passengerId);
-        return createViewStatement.executeUpdate();
+        int queryResultRowCount = createViewStatement.executeUpdate();
+        return showQueryUpdateMessage(queryResultRowCount);
     }
 
     public static ResultSet showView(int passengerId) throws SQLException {
@@ -275,5 +278,11 @@ public class Query {
         return showStatement.executeQuery();
     }
 
+    /**
+     * Helper functions
+     */
 
+    public static String showQueryUpdateMessage(int queryResultRowCount) {
+        return "Query was successful. " + queryResultRowCount + "was affected.";
+    }
 }
