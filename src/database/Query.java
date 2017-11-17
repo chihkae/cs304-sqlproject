@@ -211,7 +211,8 @@ public class Query {
                         "select distinct flight_number, terminal_number from arrival_flight) u, "+
                         "passenger p, customer_service cs " +
                         "where p.id = ? "+
-                        "and p.flight_number = u.flight_number "+
+                        "and (p.departure_flight_number = u.flight_number "+
+                        "or p.arrival_flight_number = u.flight_number) "+
                         "and u.terminal_number = cs.terminal_number "+
                         "and cs.type LIKE '%Exchange%' ";
         PreparedStatement booleanStatement = getPreparedStatement(booleanString);
