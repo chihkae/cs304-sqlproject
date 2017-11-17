@@ -138,23 +138,27 @@ public class EmployeeViewer extends SubViewer {
        // subPanel3.setPreferredSize(new Dimension(500, 40));
         JPanel subPanel4 = new JPanel();
 
+        JLabel passengerID = new JLabel("Passenger ID");
         JLabel flightNum = new JLabel("Flight number: ");
         JLabel departureDate = new JLabel("Departure Date: ");
         JLabel name = new JLabel("Name: ");
         JLabel phone = new JLabel("Phone: ");
         JLabel address = new JLabel("Address: ");
 
+        JTextField passengerT = new JTextField(8);
         JTextField flightNumT = new JTextField(8);
         JTextField departureT = new JTextField(10);
         JTextField nameT = new JTextField(10);
         JTextField phoneT = new JTextField(10);
         JTextField addressT = new JTextField(20);
 
-        JTextField[] tArr = {flightNumT, departureT, nameT, phoneT, addressT};
-        Flag[] fArr = {Flag.CHAR, Flag.DATE, Flag.CHAR, Flag.CHAR, Flag.CHAR};
+        JTextField[] tArr = {passengerT, flightNumT, departureT, nameT, phoneT, addressT};
+        Flag[] fArr = {Flag.INTEGER, Flag.CHAR, Flag.DATE, Flag.CHAR, Flag.CHAR, Flag.CHAR};
         JButton submit = new JButton("Submit");
         submit.addActionListener(new EnterListener(tArr, fArr, MethodFlag.ADDNEWPASSENGER));
 
+        subPanel1.add(passengerID);
+        subPanel1.add(passengerT);
         subPanel1.add(flightNum);
         subPanel1.add(flightNumT);
         subPanel1.add(departureDate);

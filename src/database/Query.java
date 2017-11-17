@@ -35,13 +35,13 @@ public class Query {
         return showQueryUpdateMessage(queryResultRowCount);
 
     }
-    public static ResultSet showPassengers() throws SQLException{
-        String selectString=
-                "select * "+
-                        "from passenger p";
-        PreparedStatement selectStatement = getPreparedStatement(selectString);
-        return selectStatement.executeQuery();
-    }
+//    public static ResultSet showPassengers() throws SQLException{
+//        String selectString=
+//                "select * "+
+//                        "from passenger p";
+//        PreparedStatement selectStatement = getPreparedStatement(selectString);
+//        return selectStatement.executeQuery();
+//    }
 
     public static String changeAirline(int passengerId, String newAirlineName) throws SQLException {
         // only applies to departure.
@@ -284,6 +284,6 @@ public class Query {
      */
 
     public static String showQueryUpdateMessage(int queryResultRowCount) {
-        return "Query was successful. " + queryResultRowCount + "was affected.";
+        return "Query was successful. " + queryResultRowCount + " was affected.";
     }
 }

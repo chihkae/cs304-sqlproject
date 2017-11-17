@@ -8,7 +8,6 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.sql.Date;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.text.SimpleDateFormat;
@@ -20,7 +19,6 @@ public class SubViewer {
     protected JScrollPane scrollPane;
     protected JPanel displayPanel;
     protected Object[][] resultSet;
-    protected int successInt;
     //private static final String PATH = "doge.png";
     public SubViewer()
     {
@@ -122,6 +120,8 @@ public class SubViewer {
                     getLostBaggage(resultIntegers.get(0));
                     break;
                 case REMOVEPASSENGER:
+                    removePassenger(resultIntegers.get(0));
+                    break;
                 case RATING:
                     getHereRating(resultIntegers.get(0));
                     break;
@@ -129,6 +129,8 @@ public class SubViewer {
                     getFavouriteRestaurant(resultStrings.get(0));
                     break;
                 case CHANGEAIRINE:
+                    changeAirline(resultIntegers.get(0), resultStrings.get(0));
+                    break;
                 case NONENGSERVICE:
                     getNonEnglishService(resultIntegers.get(0));
                     break;
@@ -136,7 +138,12 @@ public class SubViewer {
                     updateArrival(resultStrings.get(0), d, t);
                     break;
                 case ADDNEWPASSENGER:
+                    addPassenger(resultIntegers.get(0), resultStrings.get(0),
+                            d, resultStrings.get(1), resultStrings.get(2), resultStrings.get(3));
+                    break;
                 case UPDATEDEPARTURE:
+                    updateDeparture(resultStrings.get(0), d, t);
+                    break;
             }
         }
 
@@ -153,6 +160,49 @@ public class SubViewer {
             }
         }
 
+        private void removePassenger(int pid){
+            try {
+                scrollPane = new JScrollPane(new JTextArea(Query.removePassenger(pid)));
+                displayPanel.add(scrollPane, BorderLayout.CENTER);
+                frame.revalidate();
+            } catch (SQLException e) {
+                popOutWindow(e.getMessage(), "Error Code 127");
+            }
+        }
+
+        private void updateDeparture(String flightNumber, java.sql.Date departureDate,
+                                     java.sql.Time newDepartureTime){
+            try {
+                scrollPane.setViewportView(new JTextArea(Query.updateDepartureFlightTime(flightNumber, departureDate, newDepartureTime)));
+                displayPanel.add(scrollPane, BorderLayout.CENTER);
+                frame.revalidate();
+            } catch (SQLException e) {
+                popOutWindow(e.getMessage(), "Error Code 128");
+            }
+        }
+
+        private void changeAirline(int passengerId, String newAirlineName){
+            try {
+                scrollPane = new JScrollPane(new JTextArea(Query.changeAirline(passengerId, newAirlineName)));
+                displayPanel.add(scrollPane, BorderLayout.CENTER);
+                frame.revalidate();
+            } catch (SQLException e) {
+                popOutWindow(e.getMessage(), "Error Code 126");
+            }
+        }
+
+        private void addPassenger(int passengerId, String departureFlightNumber, Date departureFlightDate,
+                                  String passengerName, String phoneNumber, String address){
+            try{
+                scrollPane = new JScrollPane(new JTextArea(Query.addNewPassenger(passengerId,
+                        departureFlightNumber, departureFlightDate, passengerName, phoneNumber, address)));
+                displayPanel.add(scrollPane, BorderLayout.CENTER);
+                frame.revalidate();
+            }catch(SQLException e){
+                popOutWindow(e.getMessage(), "Error Code 124");
+            }
+        }
+
         private void getNonEnglishService(int pid){
             try {
                 scrollPane = new JScrollPane(new JTextArea(Query.nonEnglish_exch(pid)));
@@ -160,8 +210,8 @@ public class SubViewer {
                 displayPanel.add(scrollPane, BorderLayout.CENTER);
                 frame.revalidate();
             } catch (SQLException e) {
-                System.out.println(e);
-                //popOutWindow(e.getMessage(), "Error Code 119");
+                //System.out.println(e);
+                popOutWindow(e.getMessage(), "Error Code 119");
             }
         }
 
@@ -196,7 +246,7 @@ public class SubViewer {
                 displayPanel.add(scrollPane, BorderLayout.CENTER);
                 frame.revalidate();
             }catch(SQLException e){
-                popOutWindow(e.getMessage(), "Error Code 118");
+                popOutWindow(e.getMessage(), "Error Code 125");
             }
         }
 
