@@ -4,6 +4,7 @@ import database.Query;
 import database.QueryResult;
 
 import javax.swing.*;
+import javax.swing.table.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -19,6 +20,7 @@ public class SubViewer {
     protected JScrollPane scrollPane;
     protected JPanel displayPanel;
     protected Object[][] resultSet;
+    public static final float SIZE = 15f;
     //private static final String PATH = "doge.png";
     public SubViewer()
     {
@@ -169,8 +171,10 @@ public class SubViewer {
 
         private void getVIPLounge(int pid){
             try {
+                JTextArea a = new JTextArea(Query.vipLoungeAvailable(pid));
+                a.setFont(a.getFont().deriveFont(17f));
                 //resultSet = QueryResult.parseResultSet(Query.vipLoungeAvailable(pid));
-                scrollPane = new JScrollPane(new JTextArea(Query.vipLoungeAvailable(pid)));
+                scrollPane = new JScrollPane(a);
 //                scrollPane.setViewportView(new JTable(copyArray(resultSet), resultSet[0]));
                 displayPanel.add(scrollPane, BorderLayout.CENTER);
                 frame.revalidate();
@@ -182,7 +186,9 @@ public class SubViewer {
 
         private void removePassenger(int pid){
             try {
-                scrollPane = new JScrollPane(new JTextArea(Query.removePassenger(pid)));
+                JTextArea a = new JTextArea(Query.removePassenger(pid));
+                a.setFont(a.getFont().deriveFont(17f));
+                scrollPane = new JScrollPane(a);
                 displayPanel.add(scrollPane, BorderLayout.CENTER);
                 frame.revalidate();
             } catch (SQLException e) {
@@ -193,7 +199,9 @@ public class SubViewer {
         private void updateDeparture(String flightNumber, java.sql.Date departureDate,
                                      java.sql.Time newDepartureTime){
             try {
-                scrollPane.setViewportView(new JTextArea(Query.updateDepartureFlightTime(flightNumber, departureDate, newDepartureTime)));
+                JTextArea a = new JTextArea(Query.updateDepartureFlightTime(flightNumber, departureDate, newDepartureTime));
+                a.setFont(a.getFont().deriveFont(17f));
+                scrollPane.setViewportView(a);
                 displayPanel.add(scrollPane, BorderLayout.CENTER);
                 frame.revalidate();
             } catch (SQLException e) {
@@ -203,7 +211,9 @@ public class SubViewer {
 
         private void changeAirline(int passengerId, String newAirlineName){
             try {
-                scrollPane = new JScrollPane(new JTextArea(Query.changeAirline(passengerId, newAirlineName)));
+                JTextArea a = new JTextArea(Query.changeAirline(passengerId, newAirlineName));
+                a.setFont(a.getFont().deriveFont(17f));
+                scrollPane = new JScrollPane(a);
                 displayPanel.add(scrollPane, BorderLayout.CENTER);
                 frame.revalidate();
             } catch (SQLException e) {
@@ -214,8 +224,10 @@ public class SubViewer {
         private void addPassenger(int passengerId, String departureFlightNumber, Date departureFlightDate,
                                   String passengerName, String phoneNumber, String address){
             try{
-                scrollPane = new JScrollPane(new JTextArea(Query.addNewPassenger(passengerId,
-                        departureFlightNumber, departureFlightDate, passengerName, phoneNumber, address)));
+                JTextArea a = new JTextArea(Query.addNewPassenger(passengerId,
+                    departureFlightNumber, departureFlightDate, passengerName, phoneNumber, address));
+                a.setFont(a.getFont().deriveFont(17f));
+                scrollPane = new JScrollPane(a);
                 displayPanel.add(scrollPane, BorderLayout.CENTER);
                 frame.revalidate();
             }catch(SQLException e){
@@ -225,7 +237,9 @@ public class SubViewer {
 
         private void getNonEnglishService(int pid){
             try {
-                scrollPane = new JScrollPane(new JTextArea(Query.nonEnglish_exch(pid)));
+                JTextArea a = new JTextArea(Query.nonEnglish_exch(pid));
+                a.setFont(a.getFont().deriveFont(17f));
+                scrollPane = new JScrollPane(a);
 //                scrollPane.setViewportView(new JTable(copyArray(resultSet), resultSet[0]));
                 displayPanel.add(scrollPane, BorderLayout.CENTER);
                 frame.revalidate();
@@ -238,7 +252,9 @@ public class SubViewer {
         private void updateArrival(String flightNumber, java.sql.Date arrivalDate,
                                    java.sql.Time newArrivalTime){
             try {
-                scrollPane.setViewportView(new JTextArea(Query.updateArrivalFlightTime(flightNumber, arrivalDate, newArrivalTime)));
+                JTextArea a = new JTextArea(Query.updateArrivalFlightTime(flightNumber, arrivalDate, newArrivalTime));
+                a.setFont(a.getFont().deriveFont(17f));
+                scrollPane.setViewportView(a);
                 displayPanel.add(scrollPane, BorderLayout.CENTER);
                 frame.revalidate();
             } catch (SQLException e) {
@@ -249,7 +265,9 @@ public class SubViewer {
         private void getHereRating(int pid){
             try{
                 resultSet = QueryResult.parseResultSet(Query.ateHereStars(pid));
-                scrollPane = new JScrollPane(new JTable(copyArray(resultSet), resultSet[0]));
+                JTable t = new JTable(copyArray(resultSet), resultSet[0]);
+                t.setFont(t.getFont().deriveFont(17f));
+                scrollPane = new JScrollPane(t, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 //                scrollPane.setViewportView(new JTable(copyArray(resultSet), resultSet[0]));
                 displayPanel.add(scrollPane, BorderLayout.CENTER);
                 frame.revalidate();
@@ -261,7 +279,10 @@ public class SubViewer {
         private void getLostBaggage(int pid){
             try{
                 resultSet = QueryResult.parseResultSet(Query.findLostBaggage(pid));
-                scrollPane = new JScrollPane(new JTable(copyArray(resultSet), resultSet[0]));
+                JTable t = new JTable(copyArray(resultSet), resultSet[0]);
+                t.setFont(t.getFont().deriveFont(17f));
+                scrollPane = new JScrollPane(t, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+
 //                scrollPane.setViewportView(new JTable(copyArray(resultSet), resultSet[0]));
                 displayPanel.add(scrollPane, BorderLayout.CENTER);
                 frame.revalidate();
@@ -276,7 +297,9 @@ public class SubViewer {
                     resultSet = QueryResult.parseResultSet(Query.showAllRestaurants());
                 else
                     resultSet = QueryResult.parseResultSet(Query.favoriteLocation(name));
-                scrollPane = new JScrollPane(new JTable(copyArray(resultSet), resultSet[0]));
+                JTable t = new JTable(copyArray(resultSet), resultSet[0]);
+                t.setFont(t.getFont().deriveFont(17f));
+                scrollPane = new JScrollPane(t, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
                 displayPanel.add(scrollPane, BorderLayout.CENTER);
                 frame.revalidate();
             }catch(SQLException e){
@@ -381,9 +404,6 @@ public class SubViewer {
     }
 
     protected void popOutWindow(String message, String error) {
-//        ImageIcon icon = new ImageIcon(PATH);
-//        Image image = icon.getImage();
-//        Image scaled = image.getScaledInstance(80,80, java.awt.Image.SCALE_SMOOTH);
         JOptionPane.showMessageDialog(null, message, error, JOptionPane.ERROR_MESSAGE);
     }
 
@@ -403,10 +423,28 @@ public class SubViewer {
     }
 
     protected Object[][] copyArray(Object[][] o){
-        Object[][] subcopy = new Object[o.length][o[0].length];
+        Object[][] subcopy = new Object[o.length-1][o[0].length];
+        //System.out.println(o.length);
         for(int i = 1; i < o.length; i++){
-           subcopy[i] = o[i];
+            //System.out.println(o[i]);
+           subcopy[i-1] = o[i];
         }
         return subcopy;
+    }
+
+    public void resizeColumnWidth(JTable table) {
+        final TableColumnModel columnModel = table.getColumnModel();
+        for (int column = 0; column < table.getColumnCount(); column++) {
+            int width = 150; // Min width
+            for (int row = 0; row < table.getRowCount(); row++) {
+                TableCellRenderer renderer = table.getCellRenderer(row, column);
+                Component comp = table.prepareRenderer(renderer, row, column);
+                width = Math.max(comp.getPreferredSize().width +1 , width);
+            }
+            if(width > 300)
+                width=300;
+            columnModel.getColumn(column).setPreferredWidth(width);
+        }
+        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
     }
 }
