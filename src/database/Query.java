@@ -198,7 +198,7 @@ public class Query {
                 return "Sorry there is currently no lounge available at your terminal!";
             }
         } catch(SQLException e){
-            return "Sorry there is currently no lounge available at your terminal!";
+            return e.getMessage();
         }
     }
 
@@ -218,7 +218,7 @@ public class Query {
         PreparedStatement booleanStatement = getPreparedStatement(booleanString);
         booleanStatement.setInt(1, p_id);
         ResultSet rs= booleanStatement.executeQuery();
-
+        rs.next();
         try {
             Boolean non_english_service = rs.getBoolean("non_english_service");
             if (non_english_service) {
@@ -227,7 +227,7 @@ public class Query {
                 return "Sorry only english service is provided at the currency exchange";
             }
         } catch(SQLException e){
-            return "Sorry only english service is provided at the currency exchange";
+            return e.getMessage();
         }
 
     }
