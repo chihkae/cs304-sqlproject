@@ -155,7 +155,11 @@ public class EmployeeViewer extends SubViewer {
         JTextField[] tArr = {passengerT, flightNumT, departureT, nameT, phoneT, addressT};
         Flag[] fArr = {Flag.INTEGER, Flag.CHAR, Flag.DATE, Flag.CHAR, Flag.CHAR, Flag.CHAR};
         JButton submit = new JButton("Submit");
+        JButton arrival = new JButton("Show Arrival Flights");
+        JButton departure = new JButton("Show Departure Flights");
         submit.addActionListener(new EnterListener(tArr, fArr, MethodFlag.ADDNEWPASSENGER));
+        arrival.addActionListener(new ShowAllArrival());
+        departure.addActionListener(new ShowAllDeparture());
 
         subPanel1.add(passengerID);
         subPanel1.add(passengerT);
@@ -173,6 +177,8 @@ public class EmployeeViewer extends SubViewer {
         subPanel3.add(addressT);
 
         subPanel4.add(submit);
+        subPanel4.add(arrival);
+        subPanel4.add(departure);
 
         c.gridy = 0;
         mainPanel.add(subPanel1, c);
@@ -188,16 +194,7 @@ public class EmployeeViewer extends SubViewer {
 
         // TODO: gui
         //JTextArea area = new JTextArea();
-        try {
-            Object[][] resultSet = QueryResult.parseResultSet(Query.showAllPassengers());
-            JTable t = new JTable(copyArray(resultSet), resultSet[0]);
-            t.setFont(t.getFont().deriveFont(SIZE));
-            resizeColumnWidth(t);
-            scrollPane = new JScrollPane(t, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-            displayPanel.add(scrollPane, BorderLayout.CENTER);
-        } catch (SQLException e) {
-            popOutWindow(e.getMessage(), "Error Code 112");
-        }
+        showPassengers();
     }
 
     protected void changeAirline(){
@@ -261,16 +258,7 @@ public class EmployeeViewer extends SubViewer {
         // TODO: scroll panel for table
 
         //JTextArea area = new JTextArea();
-        try {
-            Object[][] resultSet = QueryResult.parseResultSet(Query.showAllArrivalFlights());
-            JTable t = new JTable(copyArray(resultSet),resultSet[0]);
-            t.setFont(t.getFont().deriveFont(SIZE));
-            resizeColumnWidth(t);
-            scrollPane = new JScrollPane(t, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-            displayPanel.add(scrollPane, BorderLayout.CENTER);
-        } catch (SQLException e) {
-            popOutWindow(e.getMessage(), "Error Code 113");
-        }
+        showArrival();
     }
 
     protected void removePassenger(){
@@ -293,16 +281,7 @@ public class EmployeeViewer extends SubViewer {
         oldPanel = searchPanel;
         // TODO: scroll panel for table
 
-        try {
-            Object[][] resultSet = QueryResult.parseResultSet(Query.showAllPassengers());
-            JTable t = new JTable(copyArray(resultSet), resultSet[0]);
-            t.setFont(t.getFont().deriveFont(SIZE));
-            resizeColumnWidth(t);
-            scrollPane = new JScrollPane(t, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-            displayPanel.add(scrollPane, BorderLayout.CENTER);
-        } catch (SQLException e) {
-            popOutWindow(e.getMessage(), "Error Code 114");
-        }
+        showPassengers();
     }
 
     protected void updateDepartureFlight(){
@@ -339,16 +318,7 @@ public class EmployeeViewer extends SubViewer {
         oldPanel = main;
         // TODO: scroll panel for table
 
-        try {
-            Object[][] resultSet = QueryResult.parseResultSet(Query.showAllDepartureFlights());
-            JTable t = new JTable(copyArray(resultSet),resultSet[0]);
-            t.setFont(t.getFont().deriveFont(SIZE));
-            resizeColumnWidth(t);
-            scrollPane = new JScrollPane(t, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-            displayPanel.add(scrollPane, BorderLayout.CENTER);
-        } catch (SQLException e) {
-            popOutWindow(e.getMessage(), "Error Code 115");
-        }
+        showDeparture();
     }
 
     protected void showNumOfPassenger(){
@@ -365,19 +335,19 @@ public class EmployeeViewer extends SubViewer {
         }
     }
 
-    protected void showPassengers(){
-        try {
-            Object[][] resultSet = QueryResult.parseResultSet(Query.showAllPassengers());
-            JTable t = new JTable(copyArray(resultSet),resultSet[0]);
-            t.setFont(t.getFont().deriveFont(SIZE));
-            //t.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-            resizeColumnWidth(t);
-            scrollPane = new JScrollPane(t, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-            displayPanel.add(scrollPane, BorderLayout.CENTER);
-        } catch (SQLException e) {
-            popOutWindow(e.getMessage(), "Error Code 116");
-        }
-    }
+//    protected void showPassengers(){
+//        try {
+//            Object[][] resultSet = QueryResult.parseResultSet(Query.showAllPassengers());
+//            JTable t = new JTable(copyArray(resultSet),resultSet[0]);
+//            t.setFont(t.getFont().deriveFont(SIZE));
+//            //t.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+//            resizeColumnWidth(t);
+//            scrollPane = new JScrollPane(t, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+//            displayPanel.add(scrollPane, BorderLayout.CENTER);
+//        } catch (SQLException e) {
+//            popOutWindow(e.getMessage(), "Error Code 116");
+//        }
+//    }
 
     class AddListener implements ActionListener{
         private MethodFlag mf;
@@ -433,32 +403,50 @@ public class EmployeeViewer extends SubViewer {
     class ShowAllArrival implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
-            try {
-                Object[][] resultSet = QueryResult.parseResultSet(Query.showAllArrivalFlights());
-                JTable t = new JTable(copyArray(resultSet),resultSet[0]);
-                t.setFont(t.getFont().deriveFont(15f));
-                resizeColumnWidth(t);
-                scrollPane = new JScrollPane(t, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-                displayPanel.add(scrollPane, BorderLayout.CENTER);
-            } catch (SQLException exception) {
-                popOutWindow(exception.getMessage(), "Error Code 115");
-            }
+            //removePanels();
+            if(scrollPane != null)
+                displayPanel.remove(scrollPane);
+            showArrival();
+            frame.revalidate();
         }
     }
 
     class ShowAllDeparture implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
-            try {
-                Object[][] resultSet = QueryResult.parseResultSet(Query.showAllDepartureFlights());
-                JTable t = new JTable(copyArray(resultSet),resultSet[0]);
-                t.setFont(t.getFont().deriveFont(15f));
-                resizeColumnWidth(t);
-                scrollPane = new JScrollPane(t, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-                displayPanel.add(scrollPane, BorderLayout.CENTER);
-            } catch (SQLException exception) {
-                popOutWindow(exception.getMessage(), "Error Code 115");
-            }
+            //removePanels();
+            if(scrollPane != null)
+                displayPanel.remove(scrollPane);
+            showDeparture();
+            frame.revalidate();
         }
     }
+
+//    protected void showArrival(){
+//        try {
+//            Object[][] resultSet = QueryResult.parseResultSet(Query.showAllArrivalFlights());
+//            JTable t = new JTable(copyArray(resultSet),resultSet[0]);
+//            t.setFont(t.getFont().deriveFont(15f));
+//            resizeColumnWidth(t);
+//            scrollPane = new JScrollPane(t, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+//            displayPanel.add(scrollPane, BorderLayout.CENTER);
+//            //frame.revalidate();
+//        } catch (SQLException exception) {
+//            popOutWindow(exception.getMessage(), "Error Code 115");
+//        }
+//    }
+//
+//    protected  void showDeparture(){
+//        try {
+//            Object[][] resultSet = QueryResult.parseResultSet(Query.showAllDepartureFlights());
+//            JTable t = new JTable(copyArray(resultSet),resultSet[0]);
+//            t.setFont(t.getFont().deriveFont(15f));
+//            resizeColumnWidth(t);
+//            scrollPane = new JScrollPane(t, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+//            displayPanel.add(scrollPane, BorderLayout.CENTER);
+//            //frame.revalidate();
+//        } catch (SQLException exception) {
+//            popOutWindow(exception.getMessage(), "Error Code 115");
+//        }
+//    }
 }

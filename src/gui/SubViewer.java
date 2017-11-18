@@ -160,6 +160,8 @@ public class SubViewer {
                             resultStrings.get(2) != null && resultStrings.get(3) != null)
                         addPassenger(resultIntegers.get(0), resultStrings.get(0),
                             d, resultStrings.get(1), resultStrings.get(2), resultStrings.get(3));
+                    else
+                        showPassengers();
                     break;
                 case UPDATEDEPARTURE:
                     if(resultStrings.get(0) != null &&
@@ -266,7 +268,7 @@ public class SubViewer {
             try{
                 resultSet = QueryResult.parseResultSet(Query.ateHereStars(pid));
                 JTable t = new JTable(copyArray(resultSet), resultSet[0]);
-                t.setFont(t.getFont().deriveFont(17f));
+                t.setFont(t.getFont().deriveFont(SIZE));
                 scrollPane = new JScrollPane(t, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 //                scrollPane.setViewportView(new JTable(copyArray(resultSet), resultSet[0]));
                 displayPanel.add(scrollPane, BorderLayout.CENTER);
@@ -280,7 +282,7 @@ public class SubViewer {
             try{
                 resultSet = QueryResult.parseResultSet(Query.findLostBaggage(pid));
                 JTable t = new JTable(copyArray(resultSet), resultSet[0]);
-                t.setFont(t.getFont().deriveFont(17f));
+                t.setFont(t.getFont().deriveFont(SIZE));
                 scrollPane = new JScrollPane(t, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
 //                scrollPane.setViewportView(new JTable(copyArray(resultSet), resultSet[0]));
@@ -298,7 +300,7 @@ public class SubViewer {
                 else
                     resultSet = QueryResult.parseResultSet(Query.favoriteLocation(name));
                 JTable t = new JTable(copyArray(resultSet), resultSet[0]);
-                t.setFont(t.getFont().deriveFont(17f));
+                t.setFont(t.getFont().deriveFont(SIZE));
                 scrollPane = new JScrollPane(t, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
                 displayPanel.add(scrollPane, BorderLayout.CENTER);
                 frame.revalidate();
@@ -335,12 +337,10 @@ public class SubViewer {
                         int year = Integer.parseInt(dateWithSlash[0]);
                         int month = Integer.parseInt(dateWithSlash[1]);
                         int day = Integer.parseInt(dateWithSlash[2]);
+                        String string = year+"-"+month+"-"+day;
                         if(year > 0 && month >= 1 && month <= 12 &&
                                 day > 0 && day <= 31){
-                            //popOutWindow("Please input valid date!", "Error Code 103");
-                            java.util.Date date = new SimpleDateFormat("yyyy/mm/dd").parse(s);
-                            //System.out.println(date.getTime());
-                            return new java.sql.Date(date.getTime());
+                            return java.sql.Date.valueOf(string);
                         }
                     }catch(Exception exception){
                         popOutWindow("Please input valid date!", "Error Code 104");
@@ -354,8 +354,8 @@ public class SubViewer {
                 int day = Integer.parseInt(dateParts[2]);
                 if(year > 0 && month >= 1 && month <= 12 &&
                         day > 0 && day <= 31){
-                    java.util.Date date = new SimpleDateFormat("yyyy-mm-dd").parse(s);
-                    return new java.sql.Date(date.getTime());
+                    //java.util.Date date = new SimpleDateFormat("yyyy-mm-dd").parse(s);
+                    return java.sql.Date.valueOf(s);
                 }
             }catch(Exception e){
                 popOutWindow(e.getMessage(), "Error Code 106");
@@ -430,6 +430,63 @@ public class SubViewer {
            subcopy[i-1] = o[i];
         }
         return subcopy;
+    }
+
+    protected void showPassengers(){
+        try {
+            Object[][] resultSet = QueryResult.parseResultSet(Query.showAllPassengers());
+            JTable t = new JTable(copyArray(resultSet),resultSet[0]);
+            t.setFont(t.getFont().deriveFont(SIZE));
+            //t.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+            resizeColumnWidth(t);
+            scrollPane = new JScrollPane(t, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+            displayPanel.add(scrollPane, BorderLayout.CENTER);
+            frame.revalidate();
+        } catch (SQLException e) {
+            popOutWindow(e.getMessage(), "Error Code 116");
+        }
+    }
+
+    protected void showArrival(){
+        try {
+            Object[][] resultSet = QueryResult.parseResultSet(Query.showAllArrivalFlights());
+            JTable t = new JTable(copyArray(resultSet),resultSet[0]);
+            t.setFont(t.getFont().deriveFont(15f));
+            resizeColumnWidth(t);
+            scrollPane = new JScrollPane(t, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+            displayPanel.add(scrollPane, BorderLayout.CENTER);
+            //frame.revalidate();
+        } catch (SQLException exception) {
+            popOutWindow(exception.getMessage(), "Error Code 115");
+        }
+    }
+
+    protected  void showDeparture(){
+        try {
+            Object[][] resultSet = QueryResult.parseResultSet(Query.showAllDepartureFlights());
+            JTable t = new JTable(copyArray(resultSet),resultSet[0]);
+            t.setFont(t.getFont().deriveFont(15f));
+            resizeColumnWidth(t);
+            scrollPane = new JScrollPane(t, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+            displayPanel.add(scrollPane, BorderLayout.CENTER);
+            //frame.revalidate();
+        } catch (SQLException exception) {
+            popOutWindow(exception.getMessage(), "Error Code 115");
+        }
+    }
+
+    protected void showRestaurants() {
+        try {
+            resultSet = QueryResult.parseResultSet(Query.showAllRestaurants());
+            JTable t = new JTable(copyArray(resultSet), resultSet[0]);
+            t.setFont(t.getFont().deriveFont(SIZE));
+            resizeColumnWidth(t);
+            scrollPane = new JScrollPane(t, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+            displayPanel.add(scrollPane, BorderLayout.CENTER);
+            //frame.revalidate();
+        } catch (SQLException e) {
+            popOutWindow(e.getMessage(), "Error Code 118");
+        }
     }
 
     public void resizeColumnWidth(JTable table) {

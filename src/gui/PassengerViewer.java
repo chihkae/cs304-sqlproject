@@ -136,16 +136,7 @@ public class PassengerViewer extends SubViewer{
         oldPanel = mainPanel;
 
         if(mf == MethodFlag.RESTAURANT){
-            try {
-                resultSet = QueryResult.parseResultSet(Query.showAllRestaurants());
-                JTable t = new JTable(copyArray(resultSet), resultSet[0]);
-                t.setFont(t.getFont().deriveFont(SIZE));
-                resizeColumnWidth(t);
-                scrollPane = new JScrollPane(t, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-                displayPanel.add(scrollPane, BorderLayout.CENTER);
-            } catch (SQLException e) {
-                popOutWindow(e.getMessage(), "Error Code 118");
-            }
+            showRestaurants();
         }else{
             JTextArea area = new JTextArea();
             scrollPane.setViewportView(area);
