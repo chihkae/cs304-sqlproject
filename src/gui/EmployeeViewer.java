@@ -224,7 +224,9 @@ public class EmployeeViewer extends SubViewer {
     }
 
     protected void updateArrivalFlight(){
+        JPanel main = new JPanel(new BorderLayout());
         JPanel searchPanel = new JPanel();
+        JPanel sub = new JPanel();
         JLabel searchName = new JLabel("Flight number: ");
         JTextField searchText = new JTextField(8);
         JLabel arrivalDate = new JLabel("Arrival date: ");
@@ -235,6 +237,8 @@ public class EmployeeViewer extends SubViewer {
         JTextField[] tArr = {searchText, arrivalDateT, newTimeT};
         Flag[] fArr = {Flag.CHAR, Flag.DATE, Flag.TIME};
         JButton submit = new JButton("Submit");
+        JButton show = new JButton("Show");
+        show.addActionListener(new ShowAllArrival());
         submit.addActionListener(new EnterListener(tArr, fArr, MethodFlag.UPDATEARRIVAL));
 
         searchPanel.add(searchName);
@@ -243,9 +247,14 @@ public class EmployeeViewer extends SubViewer {
         searchPanel.add(arrivalDateT);
         searchPanel.add(newTime);
         searchPanel.add(newTimeT);
-        searchPanel.add(submit);
-        displayPanel.add(searchPanel, BorderLayout.NORTH);
-        oldPanel = searchPanel;
+        main.add(searchPanel, BorderLayout.NORTH);
+
+        sub.add(submit);
+        sub.add(show);
+        main.add(sub, BorderLayout.SOUTH);
+
+        displayPanel.add(main, BorderLayout.NORTH);
+        oldPanel = main;
         // TODO: scroll panel for table
 
         //JTextArea area = new JTextArea();
@@ -288,6 +297,8 @@ public class EmployeeViewer extends SubViewer {
     }
 
     protected void updateDepartureFlight(){
+        JPanel main = new JPanel(new BorderLayout());
+        JPanel sub = new JPanel();
         JPanel searchPanel = new JPanel();
         JLabel searchName = new JLabel("Flight number: ");
         JTextField searchText = new JTextField(8);
@@ -299,7 +310,9 @@ public class EmployeeViewer extends SubViewer {
         JTextField[] tArr = {searchText, arrivalDateT, newTimeT};
         Flag[] fArr = {Flag.CHAR, Flag.DATE, Flag.TIME};
         JButton submit = new JButton("Submit");
+        JButton show = new JButton("Show");
         submit.addActionListener(new EnterListener(tArr, fArr, MethodFlag.UPDATEDEPARTURE));
+        show.addActionListener(new ShowAllDeparture());
 
         searchPanel.add(searchName);
         searchPanel.add(searchText);
@@ -307,9 +320,14 @@ public class EmployeeViewer extends SubViewer {
         searchPanel.add(arrivalDateT);
         searchPanel.add(newTime);
         searchPanel.add(newTimeT);
-        searchPanel.add(submit);
-        displayPanel.add(searchPanel, BorderLayout.NORTH);
-        oldPanel = searchPanel;
+        main.add(searchPanel, BorderLayout.NORTH);
+
+        sub.add(submit);
+        sub.add(show);
+        main.add(sub, BorderLayout.SOUTH);
+
+        displayPanel.add(main, BorderLayout.NORTH);
+        oldPanel = main;
         // TODO: scroll panel for table
 
         try {
@@ -390,6 +408,32 @@ public class EmployeeViewer extends SubViewer {
             removePanels();
             showPassengers();
             frame.revalidate();
+        }
+    }
+
+    class ShowAllArrival implements ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            try {
+                Object[][] resultSet = QueryResult.parseResultSet(Query.showAllArrivalFlights());
+                scrollPane.setViewportView(new JTable(copyArray(resultSet),resultSet[0]));
+                displayPanel.add(scrollPane, BorderLayout.CENTER);
+            } catch (SQLException exception) {
+                popOutWindow(exception.getMessage(), "Error Code 115");
+            }
+        }
+    }
+
+    class ShowAllDeparture implements ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            try {
+                Object[][] resultSet = QueryResult.parseResultSet(Query.showAllDepartureFlights());
+                scrollPane.setViewportView(new JTable(copyArray(resultSet),resultSet[0]));
+                displayPanel.add(scrollPane, BorderLayout.CENTER);
+            } catch (SQLException exception) {
+                popOutWindow(exception.getMessage(), "Error Code 115");
+            }
         }
     }
 }

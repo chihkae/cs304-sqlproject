@@ -86,6 +86,9 @@ public class SubViewer {
         public void actionPerformed(ActionEvent e) {
             resultIntegers = new ArrayList<>();
             resultStrings = new ArrayList<>();
+//            resultIntegers.add(-1);
+//            resultStrings.add(null);
+
             for(int i = 0; i < tArr.length; i++){
                 String str = tArr[i].getText();
                 switch (fArr[i]){
@@ -111,38 +114,55 @@ public class SubViewer {
             if(scrollPane != null)
                 displayPanel.remove(scrollPane);
 
+            //Integer pid = resultIntegers.get(0);
+            //String name = resultStrings.get(0);
+
             switch (mf){
                 case LOUNGE:
                     //System.out.println("get");
-                    getVIPLounge(resultIntegers.get(0));
+                    if(resultIntegers.get(0) != -1)
+                        getVIPLounge(resultIntegers.get(0));
                     break;
                 case FINDLOSTBAGGAGE:
-                    getLostBaggage(resultIntegers.get(0));
+                    if(resultIntegers.get(0) != -1)
+                        getLostBaggage(resultIntegers.get(0));
                     break;
                 case REMOVEPASSENGER:
-                    removePassenger(resultIntegers.get(0));
+                    if(resultIntegers.get(0) != -1)
+                        removePassenger(resultIntegers.get(0));
                     break;
                 case RATING:
-                    getHereRating(resultIntegers.get(0));
+                    if(resultIntegers.get(0) != -1)
+                        getHereRating(resultIntegers.get(0));
                     break;
                 case RESTAURANT:
-                    getFavouriteRestaurant(resultStrings.get(0));
+                    if(resultStrings.get(0) != null)
+                        getFavouriteRestaurant(resultStrings.get(0));
                     break;
                 case CHANGEAIRINE:
-                    changeAirline(resultIntegers.get(0), resultStrings.get(0));
+                    if(resultIntegers.get(0) != -1 && resultStrings.get(0) != null)
+                        changeAirline(resultIntegers.get(0), resultStrings.get(0));
                     break;
                 case NONENGSERVICE:
-                    getNonEnglishService(resultIntegers.get(0));
+                    if(resultIntegers.get(0) != -1)
+                        getNonEnglishService(resultIntegers.get(0));
                     break;
                 case UPDATEARRIVAL:
-                    updateArrival(resultStrings.get(0), d, t);
+                    if(resultStrings.get(0) != null &&
+                            d != null && t != null)
+                        updateArrival(resultStrings.get(0), d, t);
                     break;
                 case ADDNEWPASSENGER:
-                    addPassenger(resultIntegers.get(0), resultStrings.get(0),
+                    if(resultIntegers.get(0) != -1 && resultStrings.get(0) != null &&
+                            d != null && resultStrings.get(1) != null &&
+                            resultStrings.get(2) != null && resultStrings.get(3) != null)
+                        addPassenger(resultIntegers.get(0), resultStrings.get(0),
                             d, resultStrings.get(1), resultStrings.get(2), resultStrings.get(3));
                     break;
                 case UPDATEDEPARTURE:
-                    updateDeparture(resultStrings.get(0), d, t);
+                    if(resultStrings.get(0) != null &&
+                            d != null && t != null)
+                        updateDeparture(resultStrings.get(0), d, t);
                     break;
             }
         }
@@ -296,6 +316,7 @@ public class SubViewer {
                                 day > 0 && day <= 31){
                             //popOutWindow("Please input valid date!", "Error Code 103");
                             java.util.Date date = new SimpleDateFormat("yyyy/mm/dd").parse(s);
+                            //System.out.println(date.getTime());
                             return new java.sql.Date(date.getTime());
                         }
                     }catch(Exception exception){
