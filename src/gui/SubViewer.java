@@ -132,6 +132,8 @@ public class SubViewer {
                 case REMOVEPASSENGER:
                     if(resultIntegers.get(0) != -1)
                         removePassenger(resultIntegers.get(0));
+                    else
+                        showPassengers();
                     break;
                 case RATING:
                     if(resultIntegers.get(0) != -1)
@@ -140,6 +142,8 @@ public class SubViewer {
                 case RESTAURANT:
                     if(resultStrings.get(0) != null)
                         getFavouriteRestaurant(resultStrings.get(0));
+                    else
+                        showRestaurants();
                     break;
                 case CHANGEAIRINE:
                     if(resultIntegers.get(0) != -1 && resultStrings.get(0) != null)
@@ -153,6 +157,8 @@ public class SubViewer {
                     if(resultStrings.get(0) != null &&
                             d != null && t != null)
                         updateArrival(resultStrings.get(0), d, t);
+                    else
+                        showArrival();
                     break;
                 case ADDNEWPASSENGER:
                     if(resultIntegers.get(0) != -1 && resultStrings.get(0) != null &&
@@ -167,6 +173,8 @@ public class SubViewer {
                     if(resultStrings.get(0) != null &&
                             d != null && t != null)
                         updateDeparture(resultStrings.get(0), d, t);
+                    else
+                        showDeparture();
                     break;
             }
         }
