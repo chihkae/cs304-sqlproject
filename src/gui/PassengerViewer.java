@@ -12,7 +12,8 @@ import java.sql.SQLException;
 public class PassengerViewer extends SubViewer{
     private JPanel passengerPanel;
     private JPanel buttonPanel;
-    private int id;
+    private static int id;
+    private static JLabel title;
 
     private static PassengerViewer instance;
 
@@ -29,7 +30,15 @@ public class PassengerViewer extends SubViewer{
     public static PassengerViewer getInstance(int id) {
         if(instance == null)
             instance = new PassengerViewer(id);
+        else
+            changeID(id);
         return instance;
+    }
+
+    private static void changeID(int pid){
+        id = pid;
+        title.setText("Passenger "+id);
+        title.setFont(title.getFont().deriveFont(20f));
     }
 
     private void createPanel(){
@@ -56,7 +65,7 @@ public class PassengerViewer extends SubViewer{
         back.addActionListener(new BackListener());
 
         //JPanel titlePanel = new JPanel();
-        JLabel title = new JLabel(" Passenger "+id);
+        title = new JLabel(" Passenger "+id);
         title.setFont(title.getFont().deriveFont(20f));
         //titlePanel.add(title);
 
