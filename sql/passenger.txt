@@ -10,3 +10,6 @@
 10	CAN006	2017/11/08	\N	\N	Mark Texeria	903-342-2423	7225 Liberty Lane Bolingbrook, IL 60440
 11	\N	\N	MLB105	2017/11/08	Robinson	343-343-3434	Main Road, Banckod, IL 3434
 12	\N	\N	LIM106	2017/11/09	Jose	232-232-2322	SMT RD., SDFDG, BS 3434
+13	LAX005	2017/11/11	\N	\N	Gibson Easton	343-343-3434	53 Road Kingns Avenue, Berkley CA 3434
+14	LAX005	2017/11/09	\N	\N	Deaston Arseal	343-343-3434	75 Road Western Way, San Diego CA 343
+15	HOU006	2017/11/09	\N	\N	Ereal Era	343-343-3433	87 Washington Street, Berton Avenue CA 343	
