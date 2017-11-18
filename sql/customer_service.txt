@@ -2,7 +2,7 @@
 35 	1	Departure Service Counter	1
 36 	1	Lost and Found	1
 37 	1	Mobility and Wheelchair Assistance	1
-38 	1 	Foreign Currency Exchange	0
+38 	1 	Foreign Currency Exchange	1
 39	1	Language Translation	1
 40	1	Immigration Document assitance	1
 41	1 	Medical Center	1
@@ -18,7 +18,7 @@
 51 	3 	Departure Service Counter	1
 52 	3	Lost and Found	0
 53 	3 	Mobility and Wheelchair Assistance	0
-54 	3 	Foreign Currency Exchange	0
+54 	3 	Foreign Currency Exchange	1
 55	3	Language Translation	1
 56 	3	Immigration Document assitance	1
 57	3 	Medical Center	1
