@@ -35,42 +35,51 @@ public class Query {
         return showQueryUpdateMessage(queryResultRowCount);
 
     }
-//    public static ResultSet showPassengers() throws SQLException{
-//        String selectString=
-//                "select * "+
-//                        "from passenger p";
-//        PreparedStatement selectStatement = getPreparedStatement(selectString);
-//        return selectStatement.executeQuery();
-//    }
 
     public static String changeAirline(int passengerId, String newAirlineName) throws SQLException {
         // only applies to departure.
         // It should change the flight and try to find a flight
         // that has the same destination + same date + different airline.
-        // It should return an error if unable to find a different flight with the same
+        // It should not make any changes if unable to find a different flight with the same
         // destination and same date.
 
         String updateString =
                 "update passenger " +
-                        "set flight_number = t.flight_number " +
-                        "from ( " +
-                        "select * " +
-                        "from departure_flight df1, departure_flight df2 " +
-                        "where df1.flight_number <> df2.flight_number and df1.departure_date = df2.departure_date " +
-                        "and df1.destination = df2.destination " +
-                        "and df1.airline_name = ? )t " +
-                        "where passenger.flight_number <> t.flight_number " +
-                        "and t.destination = (select distinct destination"+
-                        "from passenger p, departure_flight df"+
-                        "where p.departure_flight_number= df.flight_number" +
-                        "p.id= ?)"+
-                        "and passenger.flight_date = t.departure_date " +
-                        "passenger.id = ?";
+                        "set passenger.departure_flight_number = " +
+                        "ifnull( " +
+                            "(" +
+                                "select distinct flight_number " +
+                                "from " +
+                                "(" +
+                                    "select * from passenger " +
+                                ") AS p123, " +
+                                "( " +
+                                    "select distinct df1.flight_number, df1.destination, df1.departure_date " +
+                                    "from departure_flight df1 " +
+                                    "where df1.airline_name = ? " +
+                                ") AS t123 " +
+                                "where p123.departure_flight_number <> t123.flight_number " +
+                                "and p123.departure_date = t123.departure_date " +
+                                "and p123.id = ? " +
+                                "and t123.destination = " +
+                                "(" +
+                                    "select distinct destination " +
+                                    "from (select * from passenger) pass, " +
+                                    "departure_flight df " +
+                                    "where pass.departure_flight_number = df.flight_number " +
+                                    "and pass.departure_date = df.departure_date " +
+                                    "and pass.id = ? " +
+                                ") " +
+                            "), " +
+                            "departure_flight_number " +
+                        ") " +
+                        "where passenger.id = ?;";
 
         PreparedStatement updateStatement = getPreparedStatement(updateString);
         updateStatement.setString(1, newAirlineName);
         updateStatement.setInt(2, passengerId);
-        updateStatement.setInt(2, passengerId);
+        updateStatement.setInt(3, passengerId);
+        updateStatement.setInt(4, passengerId);
 
         int queryResultRowCount = updateStatement.executeUpdate();
         return showQueryUpdateMessage(queryResultRowCount);
@@ -198,7 +207,7 @@ public class Query {
                 return "Sorry there is currently no lounge available at your terminal!";
             }
         } catch(SQLException e){
-            return "Sorry there is currently no lounge available at your terminal!";
+            return e.getMessage();
         }
     }
 
@@ -218,7 +227,7 @@ public class Query {
         PreparedStatement booleanStatement = getPreparedStatement(booleanString);
         booleanStatement.setInt(1, p_id);
         ResultSet rs= booleanStatement.executeQuery();
-
+        rs.next();
         try {
             Boolean non_english_service = rs.getBoolean("non_english_service");
             if (non_english_service) {
@@ -227,7 +236,7 @@ public class Query {
                 return "Sorry only english service is provided at the currency exchange";
             }
         } catch(SQLException e){
-            return "Sorry only english service is provided at the currency exchange";
+            return e.getMessage();
         }
 
     }
