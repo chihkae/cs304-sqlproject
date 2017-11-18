@@ -53,7 +53,13 @@ public class QueryResult {
         for (int y = 1; y <= numCols; y++) {
             // Get the string value of the column data.
             // getString() converts the data to a string. Ex. Date -> String and Integer -> String
-            listOfRowValues.add(rs.getString(y));
+            String columnValue = rs.getString(y);
+
+            if (columnValue == null) {
+                listOfRowValues.add("null");
+            } else {
+                listOfRowValues.add(columnValue);
+            }
         }
 
         return listOfRowValues;

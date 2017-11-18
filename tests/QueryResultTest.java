@@ -10,11 +10,7 @@ public class QueryResultTest {
     @Test
     public void test1() {
         try {
-            // ResultSet rs = Query.findLostBaggage(4);
-            // Object[][] object2dArray = QueryResult.parseResultSet(rs);
-            // printOutObjects(object2dArray);
-            // System.out.println(Query.createView(1));
-            printOutObjects(QueryResult.parseResultSet(Query.showView(1)));
+            printOutObjects(QueryResult.parseResultSet(Query.showAllPassengers()));
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
