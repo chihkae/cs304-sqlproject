@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
 public class PassengerViewer extends SubViewer{
+    //public static final float SIZE = 17f;
     private JPanel passengerPanel;
     private JPanel buttonPanel;
     private static int id;
@@ -92,7 +93,7 @@ public class PassengerViewer extends SubViewer{
                     actionListener = new ButtonListener("Find the location of your favorite restaurant? ", "Restaurant name: ", Flag.CHAR, MethodFlag.RESTAURANT);
                     break;
                 case 3:
-                    actionListener = new ButtonListener("Find out ratings of whre you ate at? ", "Passenger ID: ", Flag.INTEGER, MethodFlag.RATING);
+                    actionListener = new ButtonListener("Find out ratings of where you ate at? ", "Passenger ID: ", Flag.INTEGER, MethodFlag.RATING);
                     break;
                 default:
                     actionListener = new InformationListener();
@@ -137,7 +138,10 @@ public class PassengerViewer extends SubViewer{
         if(mf == MethodFlag.RESTAURANT){
             try {
                 resultSet = QueryResult.parseResultSet(Query.showAllRestaurants());
-                scrollPane.setViewportView(new JTable(copyArray(resultSet), resultSet[0]));
+                JTable t = new JTable(copyArray(resultSet), resultSet[0]);
+                t.setFont(t.getFont().deriveFont(SIZE));
+                resizeColumnWidth(t);
+                scrollPane = new JScrollPane(t, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
                 displayPanel.add(scrollPane, BorderLayout.CENTER);
             } catch (SQLException e) {
                 popOutWindow(e.getMessage(), "Error Code 118");
@@ -176,33 +180,16 @@ public class PassengerViewer extends SubViewer{
             //oldPanel = null;
             try {
                 resultSet = QueryResult.parseResultSet(Query.showView(id));
-                scrollPane.setViewportView(new JTable(copyArray(resultSet), resultSet[0]));
+                JTable t = new JTable(copyArray(resultSet), resultSet[0]);
+
+                t.setFont(t.getFont().deriveFont(SIZE));
+                resizeColumnWidth(t);
+                scrollPane = new JScrollPane(t, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
                 displayPanel.add(scrollPane, BorderLayout.CENTER);
                 frame.revalidate();
             } catch (SQLException e1) {
                 popOutWindow(e1.getMessage(), "Error Code 122");
             }
         }
-    }
-
-    private JTable createTable(int pid, String restaurant){
-        String[] columnNames = {"First Name",
-                "Last Name",
-                "Sport",
-                "# of Years",
-                "Vegetarian"};
-        Object[][] data = {
-                {"Kathy", "Smith",
-                        "Snowboarding", new Integer(5), new Boolean(false)},
-                {"John", "Doe",
-                        "Rowing", new Integer(3), new Boolean(true)},
-                {"Sue", "Black",
-                        "Knitting", new Integer(2), new Boolean(false)},
-                {"Jane", "White",
-                        "Speed reading", new Integer(20), new Boolean(true)},
-                {"Joe", "Brown",
-                        "Pool", new Integer(10), new Boolean(false)}
-        };
-        return new JTable(data, columnNames);
     }
 }

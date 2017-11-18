@@ -190,7 +190,10 @@ public class EmployeeViewer extends SubViewer {
         //JTextArea area = new JTextArea();
         try {
             Object[][] resultSet = QueryResult.parseResultSet(Query.showAllPassengers());
-            scrollPane.setViewportView(new JTable(copyArray(resultSet), resultSet[0]));
+            JTable t = new JTable(copyArray(resultSet), resultSet[0]);
+            t.setFont(t.getFont().deriveFont(SIZE));
+            resizeColumnWidth(t);
+            scrollPane = new JScrollPane(t, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
             displayPanel.add(scrollPane, BorderLayout.CENTER);
         } catch (SQLException e) {
             popOutWindow(e.getMessage(), "Error Code 112");
@@ -260,7 +263,10 @@ public class EmployeeViewer extends SubViewer {
         //JTextArea area = new JTextArea();
         try {
             Object[][] resultSet = QueryResult.parseResultSet(Query.showAllArrivalFlights());
-            scrollPane.setViewportView(new JTable(copyArray(resultSet),resultSet[0]));
+            JTable t = new JTable(copyArray(resultSet),resultSet[0]);
+            t.setFont(t.getFont().deriveFont(SIZE));
+            resizeColumnWidth(t);
+            scrollPane = new JScrollPane(t, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
             displayPanel.add(scrollPane, BorderLayout.CENTER);
         } catch (SQLException e) {
             popOutWindow(e.getMessage(), "Error Code 113");
@@ -289,7 +295,10 @@ public class EmployeeViewer extends SubViewer {
 
         try {
             Object[][] resultSet = QueryResult.parseResultSet(Query.showAllPassengers());
-            scrollPane.setViewportView(new JTable(copyArray(resultSet), resultSet[0]));
+            JTable t = new JTable(copyArray(resultSet), resultSet[0]);
+            t.setFont(t.getFont().deriveFont(SIZE));
+            resizeColumnWidth(t);
+            scrollPane = new JScrollPane(t, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
             displayPanel.add(scrollPane, BorderLayout.CENTER);
         } catch (SQLException e) {
             popOutWindow(e.getMessage(), "Error Code 114");
@@ -332,7 +341,10 @@ public class EmployeeViewer extends SubViewer {
 
         try {
             Object[][] resultSet = QueryResult.parseResultSet(Query.showAllDepartureFlights());
-            scrollPane.setViewportView(new JTable(copyArray(resultSet),resultSet[0]));
+            JTable t = new JTable(copyArray(resultSet),resultSet[0]);
+            t.setFont(t.getFont().deriveFont(SIZE));
+            resizeColumnWidth(t);
+            scrollPane = new JScrollPane(t, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
             displayPanel.add(scrollPane, BorderLayout.CENTER);
         } catch (SQLException e) {
             popOutWindow(e.getMessage(), "Error Code 115");
@@ -343,7 +355,10 @@ public class EmployeeViewer extends SubViewer {
         // TODO: scroll panel for table
         try {
             Object[][] resultSet = QueryResult.parseResultSet(Query.showPassengersCountOnEachDepartureFlight());
-            scrollPane.setViewportView(new JTable(copyArray(resultSet),resultSet[0]));
+            JTable t = new JTable(copyArray(resultSet),resultSet[0]);
+            t.setFont(t.getFont().deriveFont(SIZE));
+            resizeColumnWidth(t);
+            scrollPane = new JScrollPane(t, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
             displayPanel.add(scrollPane, BorderLayout.CENTER);
         } catch (SQLException e) {
             popOutWindow(e.getMessage(), "Error Code 116");
@@ -353,7 +368,11 @@ public class EmployeeViewer extends SubViewer {
     protected void showPassengers(){
         try {
             Object[][] resultSet = QueryResult.parseResultSet(Query.showAllPassengers());
-            scrollPane.setViewportView(new JTable(copyArray(resultSet),resultSet[0]));
+            JTable t = new JTable(copyArray(resultSet),resultSet[0]);
+            t.setFont(t.getFont().deriveFont(SIZE));
+            //t.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+            resizeColumnWidth(t);
+            scrollPane = new JScrollPane(t, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
             displayPanel.add(scrollPane, BorderLayout.CENTER);
         } catch (SQLException e) {
             popOutWindow(e.getMessage(), "Error Code 116");
@@ -416,7 +435,10 @@ public class EmployeeViewer extends SubViewer {
         public void actionPerformed(ActionEvent e) {
             try {
                 Object[][] resultSet = QueryResult.parseResultSet(Query.showAllArrivalFlights());
-                scrollPane.setViewportView(new JTable(copyArray(resultSet),resultSet[0]));
+                JTable t = new JTable(copyArray(resultSet),resultSet[0]);
+                t.setFont(t.getFont().deriveFont(15f));
+                resizeColumnWidth(t);
+                scrollPane = new JScrollPane(t, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
                 displayPanel.add(scrollPane, BorderLayout.CENTER);
             } catch (SQLException exception) {
                 popOutWindow(exception.getMessage(), "Error Code 115");
@@ -429,7 +451,10 @@ public class EmployeeViewer extends SubViewer {
         public void actionPerformed(ActionEvent e) {
             try {
                 Object[][] resultSet = QueryResult.parseResultSet(Query.showAllDepartureFlights());
-                scrollPane.setViewportView(new JTable(copyArray(resultSet),resultSet[0]));
+                JTable t = new JTable(copyArray(resultSet),resultSet[0]);
+                t.setFont(t.getFont().deriveFont(15f));
+                resizeColumnWidth(t);
+                scrollPane = new JScrollPane(t, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
                 displayPanel.add(scrollPane, BorderLayout.CENTER);
             } catch (SQLException exception) {
                 popOutWindow(exception.getMessage(), "Error Code 115");
