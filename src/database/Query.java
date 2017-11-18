@@ -45,28 +45,44 @@ public class Query {
 
         String updateString =
                 "update passenger " +
-                            "set flight_number = t.flight_number " +
-                            "from (" +
-                            "select distinct df2.flight_number, df2.destination, df2.departure_date " +
-                            "from departure_flight df1, departure_flight df2 " +
-                            "where df1.flight_number <> df2.flight_number " +
-                            "and df1.departure_date = df2.departure_date " +
-                            "and df1.destination = df2.destination " +
-                            "and df1.airline_name <> df2.airline_name " +
-                            "and df2.airline = ? )t " +
-                            "where passenger.flight_number <> t.flight_number " +
-                            "and t.destination = (select distinct destination "+
-                            "from passenger p, departure_flight df "+
-                            "where p.departure_flight_number = df.flight_number " +
-                            "and p.departure_date = df.departure_date " +
-                            "and p.id = ?) " +
-                            "and passenger.departure_date = t.departure_date " +
-                            "and passenger.id = ?";
-
+                        "set passenger.departure_flight_number = " +
+                        "ifnull( " +
+                            "(" +
+                                "select distinct flight_number " +
+                                "from " +
+                                "(" +
+                                    "select * from passenger " +
+                                ") AS p123, " +
+                                "( " +
+                                    "select distinct df1.flight_number, df1.destination, df1.departure_date " +
+                                    "from departure_flight df1, departure_flight df2 " +
+                                    "where df1.flight_number <> df2.flight_number " +
+                                    "and df1.departure_date = df2.departure_date " +
+                                    "and df1.destination = df2.destination " +
+                                    "and df1.airline_name <> df2.airline_name " +
+                                    "and df1.airline_name = ? " +
+                                ") AS t123 " +
+                                "where p123.departure_flight_number <> t123.flight_number " +
+                                "and p123.departure_date = t123.departure_date " +
+                                "and p123.id = ? " +
+                                "and t123.destination = " +
+                                "(" +
+                                    "select distinct destination " +
+                                    "from (select * from passenger) pass, " +
+                                    "departure_flight df " +
+                                    "where pass.departure_flight_number = df.flight_number " +
+                                    "and pass.departure_date = df.departure_date " +
+                                    "and pass.id = ? " +
+                                ") " +
+                            "), " +
+                            "departure_flight_number " +
+                        ") " +
+                        "where passenger.id = ?;";
         PreparedStatement updateStatement = getPreparedStatement(updateString);
         updateStatement.setString(1, newAirlineName);
         updateStatement.setInt(2, passengerId);
         updateStatement.setInt(3, passengerId);
+        updateStatement.setInt(4, passengerId);
 
         int queryResultRowCount = updateStatement.executeUpdate();
         return showQueryUpdateMessage(queryResultRowCount);
