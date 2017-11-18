@@ -40,7 +40,7 @@ public class Query {
         // only applies to departure.
         // It should change the flight and try to find a flight
         // that has the same destination + same date + different airline.
-        // It should return an error if unable to find a different flight with the same
+        // It should not make any changes if unable to find a different flight with the same
         // destination and same date.
 
         String updateString =
