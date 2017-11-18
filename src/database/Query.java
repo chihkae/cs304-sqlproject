@@ -55,12 +55,8 @@ public class Query {
                                 ") AS p123, " +
                                 "( " +
                                     "select distinct df1.flight_number, df1.destination, df1.departure_date " +
-                                    "from departure_flight df1, departure_flight df2 " +
-                                    "where df1.flight_number <> df2.flight_number " +
-                                    "and df1.departure_date = df2.departure_date " +
-                                    "and df1.destination = df2.destination " +
-                                    "and df1.airline_name <> df2.airline_name " +
-                                    "and df1.airline_name = ? " +
+                                    "from departure_flight df1 " +
+                                    "where df1.airline_name = ? " +
                                 ") AS t123 " +
                                 "where p123.departure_flight_number <> t123.flight_number " +
                                 "and p123.departure_date = t123.departure_date " +
@@ -78,6 +74,7 @@ public class Query {
                             "departure_flight_number " +
                         ") " +
                         "where passenger.id = ?;";
+
         PreparedStatement updateStatement = getPreparedStatement(updateString);
         updateStatement.setString(1, newAirlineName);
         updateStatement.setInt(2, passengerId);
